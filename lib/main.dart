@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:polmeme/home/home.dart';
+import 'package:provider/provider.dart';
+
+import 'core/providers.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,12 +13,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Polmeme',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return MultiProvider(
+      providers: providers,
+      child: MaterialApp(
+        title: 'Polmeme',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        home: Home(),
       ),
-      home: Home(),
     );
   }
 }
