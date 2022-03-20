@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+
 import 'package:polmeme/memeGenerator/meme_generator.dart';
+
+import 'package:polmeme/auth/login_page.dart';
+import 'package:polmeme/newsScreen/news_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -33,7 +37,7 @@ class _HomeState extends State<Home> {
               title: Text('Twoje meme'),
             ),
             const ListTile(
-              title: const Text('Ustawienia'),
+              title: Text('Ustawienia'),
             ),
             ListTile(
               title: const Text('Ciemny motyw'),
@@ -47,10 +51,18 @@ class _HomeState extends State<Home> {
               ),
             ),
             const ListTile(
-              title: const Text('Zmiana hasła'),
+              title: Text('Zmiana hasła'),
             ),
-            const ListTile(
+            ListTile(
               title: Text('Wyloguj'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),
@@ -62,7 +74,7 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.settings),
               onPressed: () => scaffoldKey.currentState!.openEndDrawer()),
         ],
-        title: const Center(child: const Text('POLMEME')),
+        title: const Center(child: Text('POLMEME')),
       ),
       body: Column(
         children: [
@@ -78,6 +90,7 @@ class _HomeState extends State<Home> {
                 },
                 child: const Text('News'),
                 style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(185, 40)),
                   backgroundColor: MaterialStateProperty.all(
                       !_isMeme ? Color(0xff1B6569) : Colors.black),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -98,6 +111,7 @@ class _HomeState extends State<Home> {
                 },
                 child: const Text('Meme'),
                 style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(185, 40)),
                   backgroundColor: MaterialStateProperty.all(
                       _isMeme ? Color(0xff1B6569) : Colors.black),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -127,12 +141,7 @@ class _HomeState extends State<Home> {
               },
               controller: _controller,
               children: [
-                Container(
-                  child: const Text('News Page'),
-                  height: 50.00,
-                  width: 50.00,
-                  color: Colors.green,
-                ),
+                ListOfNews(),
                 Container(
                   child: const Text('Meme Page'),
                   height: 50.00,

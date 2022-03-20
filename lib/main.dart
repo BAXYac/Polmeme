@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/home/home.dart';
 import 'package:provider/provider.dart';
 
@@ -13,15 +14,14 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
-      providers: providers,
-      child: MaterialApp(
-        title: 'Polmeme',
-        theme: ThemeData(
-          primarySwatch: Colors.blue,
-        ),
-        home: Home(),
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Polmeme',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        scaffoldBackgroundColor: const Color(0xFFE0E0E12),
       ),
+      home: LoginPage(),
     );
   }
 }
