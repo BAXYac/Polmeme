@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:polmeme/auth/style.dart';
+import 'package:polmeme/home/home.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -22,10 +23,9 @@ class _LoginPageState extends State<LoginPage> {
       appBar: AppBar(backgroundColor: Colors.black, actions: <Widget>[
         OutlinedButton(
           onPressed: () {
-            Navigator.pushAndRemoveUntil(
+            Navigator.pushReplacement(
               context,
-              MaterialPageRoute(builder: (context) => LoginPage()),
-              (Route<dynamic> route) => false,
+              MaterialPageRoute(builder: (context) => Home()),
             );
           },
           child: Text(

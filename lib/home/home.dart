@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
 
 class Home extends StatefulWidget {
@@ -49,8 +50,16 @@ class _HomeState extends State<Home> {
             const ListTile(
               title: const Text('Zmiana hasła'),
             ),
-            const ListTile(
+            ListTile(
               title: Text('Wyloguj'),
+              onTap: () {
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => LoginPage(),
+                  ),
+                );
+              },
             ),
           ],
         ),
