@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/newsScreen/news_screen.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -126,12 +127,7 @@ class _HomeState extends State<Home> {
               },
               controller: _controller,
               children: [
-                Container(
-                  child: const Text('News Page'),
-                  height: 50.00,
-                  width: 50.00,
-                  color: Colors.green,
-                ),
+                ListOfNews(),
                 Container(
                   child: const Text('Meme Page'),
                   height: 50.00,
