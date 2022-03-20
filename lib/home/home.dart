@@ -33,7 +33,7 @@ class _HomeState extends State<Home> {
               title: Text('Twoje meme'),
             ),
             const ListTile(
-              title: const Text('Ustawienia'),
+              title: Text('Ustawienia'),
             ),
             ListTile(
               title: const Text('Ciemny motyw'),
@@ -47,7 +47,7 @@ class _HomeState extends State<Home> {
               ),
             ),
             const ListTile(
-              title: const Text('Zmiana hasła'),
+              title: Text('Zmiana hasła'),
             ),
             const ListTile(
               title: Text('Wyloguj'),
@@ -62,7 +62,7 @@ class _HomeState extends State<Home> {
               icon: const Icon(Icons.settings),
               onPressed: () => scaffoldKey.currentState!.openEndDrawer()),
         ],
-        title: const Center(child: const Text('POLMEME')),
+        title: const Center(child: Text('POLMEME')),
       ),
       body: Column(
         children: [
@@ -78,6 +78,7 @@ class _HomeState extends State<Home> {
                 },
                 child: const Text('News'),
                 style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(185, 40)),
                   backgroundColor: MaterialStateProperty.all(
                       !_isMeme ? Color(0xff1B6569) : Colors.black),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
@@ -98,6 +99,7 @@ class _HomeState extends State<Home> {
                 },
                 child: const Text('Meme'),
                 style: ButtonStyle(
+                  minimumSize: MaterialStateProperty.all(Size(185, 40)),
                   backgroundColor: MaterialStateProperty.all(
                       _isMeme ? Color(0xff1B6569) : Colors.black),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
