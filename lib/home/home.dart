@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
+import 'package:polmeme/widget/change_theme_button.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -13,16 +15,13 @@ class _HomeState extends State<Home> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isMeme = false;
 
-  Color myHexColor = const Color(0xff1B6569);
   @override
   PageController _controller = PageController();
   Widget build(BuildContext context) {
-    bool _isOn = true;
     return Scaffold(
-      backgroundColor: const Color(0xff625D5D),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: scaffoldKey,
       endDrawer: Drawer(
-        backgroundColor: Colors.grey,
         child: ListView(
           shrinkWrap: true,
           children: [
@@ -36,22 +35,16 @@ class _HomeState extends State<Home> {
             const ListTile(
               title: Text('Ustawienia'),
             ),
-            ListTile(
-              title: const Text('Ciemny motyw'),
-              trailing: Switch(
-                value: _isOn,
-                onChanged: (bool _isOn) {
-                  setState(() {
-                    _isOn = !_isOn;
-                  });
-                },
-              ),
+            const ListTile(
+              leading: Text("Light mode"),
+              title: ChangeThemeButtonWidget(),
+              trailing: Text("Dark mode"),
             ),
             const ListTile(
               title: Text('Zmiana hasła'),
             ),
             ListTile(
-              title: Text('Wyloguj'),
+              title: const Text('Wyloguj'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
@@ -65,10 +58,11 @@ class _HomeState extends State<Home> {
         ),
       ),
       appBar: AppBar(
-        backgroundColor: Colors.black.withOpacity(0.34),
+        backgroundColor: Theme.of(context).backgroundColor,
         actions: [
           IconButton(
               icon: const Icon(Icons.settings),
+              color: Theme.of(context).iconTheme.color,
               onPressed: () => scaffoldKey.currentState!.openEndDrawer()),
         ],
         title: const Center(child: Text('POLMEME')),
@@ -85,11 +79,14 @@ class _HomeState extends State<Home> {
                     _isMeme = false;
                   });
                 },
-                child: const Text('News'),
+                child: const Text(
+                  'News',
+                  style: TextStyle(color: Colors.white),
+                ),
                 style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(Size(185, 40)),
+                  minimumSize: MaterialStateProperty.all(const Size(185, 40)),
                   backgroundColor: MaterialStateProperty.all(
-                      !_isMeme ? Color(0xff1B6569) : Colors.black),
+                      !_isMeme ? const Color(0xff1B6569) : Colors.black),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
@@ -106,11 +103,14 @@ class _HomeState extends State<Home> {
                     _isMeme = true;
                   });
                 },
-                child: const Text('Meme'),
+                child: const Text(
+                  'Meme',
+                  style: TextStyle(color: Colors.white),
+                ),
                 style: ButtonStyle(
-                  minimumSize: MaterialStateProperty.all(Size(185, 40)),
+                  minimumSize: MaterialStateProperty.all(const Size(185, 40)),
                   backgroundColor: MaterialStateProperty.all(
-                      _isMeme ? Color(0xff1B6569) : Colors.black),
+                      _isMeme ? const Color(0xff1B6569) : Colors.black),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     const RoundedRectangleBorder(
                       borderRadius: BorderRadius.only(
