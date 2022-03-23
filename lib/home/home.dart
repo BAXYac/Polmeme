@@ -140,7 +140,7 @@ class _HomeState extends State<Home> {
               children: [
                 ListOfNews(),
                 Container(
-                  child: const Text('Meme Page'),
+                  child: const Text('Mareeeeeek deeeeeeeej swoje meme'),
                   height: 50.00,
                   width: 50.00,
                   color: Colors.red,
