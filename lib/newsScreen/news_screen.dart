@@ -28,7 +28,7 @@ class _ListOfNewsState extends State<ListOfNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
