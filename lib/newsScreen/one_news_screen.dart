@@ -1,7 +1,42 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/newsScreen/twitter_api.dart';
+import 'package:provider/provider.dart';
+import 'package:dart_twitter_api/twitter_api.dart';
 
-class OneNews extends StatelessWidget {
-  const OneNews({Key? key}) : super(key: key);
+class OneNews extends StatefulWidget {
+  OneNews({Key? key}) : super(key: key);
+
+  @override
+  State<OneNews> createState() => _OneNewsState();
+}
+
+class _OneNewsState extends State<OneNews> {
+  final twitterApi = TwitterApi(
+    client: TwitterClient(
+      consumerKey: 'y0ouZhxHcZryqL69Ud4uJ3Ris',
+      consumerSecret: 'DHbBGWP7Y4OnUN9UO9zqkQBb3jVEveRy6xTP5w4KpDFWkMFBCz',
+      token: '1505509772501602309-RyJKe26WA3HYQRMIQnFVLPvW2gBBfK',
+      secret: 'qYq9k8wkWThMUyi6TE7iGGJ5cZHMD9SB4TIhGNvFk977H',
+    ),
+  );
+  @override
+  Future<void> getTweet() async {
+    final homeTimeline = await twitterApi.timelineService.homeTimeline(
+      count: 10,
+    );
+    print(homeTimeline);
+    try {
+      // Get the last 200 tweets from your home timeline
+      final homeTimeline = await twitterApi.timelineService.homeTimeline(
+        count: 10,
+      );
+      print(homeTimeline[0]);
+      // Print the text of each Tweet
+      homeTimeline.forEach((tweet) => print(tweet.fullText));
+    } catch (error) {
+      print('error while requesting home timeline: $error');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +62,13 @@ class OneNews extends StatelessWidget {
               ),
               Expanded(
                 child: InkWell(
-                  onTap: () {},
-                  child: const Text(
-                    "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable..There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable.",
+                  onTap: () {
+                    setState(() {
+                      getTweet;
+                    });
+                  },
+                  child: Text(
+                    "cokolwiek",
                     style: TextStyle(color: Colors.black),
                   ),
                 ),
