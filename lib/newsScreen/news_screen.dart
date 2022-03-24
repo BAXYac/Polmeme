@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:polmeme/memeScreen/meme_screen.dart';
 import 'package:polmeme/newsScreen/one_news_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/twitter_api_provider.dart';
 
 class ListOfNews extends StatefulWidget {
   ListOfNews({Key? key}) : super(key: key);
@@ -22,7 +25,6 @@ class _ListOfNewsState extends State<ListOfNews> {
     });
   }
 
-  List list_of_news = [OneNews(), OneNews(), OneNews()];
   PageController controller = PageController();
 
   @override
@@ -42,7 +44,10 @@ class _ListOfNewsState extends State<ListOfNews> {
                     itemBuilder: (context, index) {
                       return myCard(index);
                     },
-                    itemCount: list_of_news.length,
+                    itemCount:
+                        Provider.of<TwietterApiProvider>(context, listen: false)
+                            .listOfTweets
+                            .length,
                   ),
                   const MemeScreen()
                 ],
@@ -60,9 +65,15 @@ class _ListOfNewsState extends State<ListOfNews> {
         onDismissed: (kierunkowy) {
           if (kierunkowy == DismissDirection.startToEnd ||
               kierunkowy == DismissDirection.endToStart) {
-            list_of_news.removeAt(index);
+            Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets
+                .removeAt(index);
           }
         },
-        child: OneNews());
+        child: OneNews(
+            userName: Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets[index]["user"]["name"],
+            tweetTxt: Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets[index]["full_text"]));
   }
 }

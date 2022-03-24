@@ -28,6 +28,6 @@ class MyThemes {
     scaffoldBackgroundColor: Colors.white,
     colorScheme: ColorScheme.light(),
     primaryColor: Colors.white,
-    iconTheme: IconThemeData(color: Color(0xff1B6569)),
+    iconTheme: IconThemeData(color: Colors.white),
   );
 }

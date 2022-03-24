@@ -5,6 +5,12 @@ import 'package:http/http.dart';
 
 class TwietterApiProvider extends ChangeNotifier {
   TwitterApi? twitterApi;
+  List<dynamic> _listOfTweets = [];
+  List<dynamic> get listOfTweets => _listOfTweets;
+  set listOfText(List<dynamic> newList) {
+    _listOfTweets = newList;
+    notifyListeners();
+  }
 
   TwietterApiProvider() {
     _init();
@@ -23,13 +29,24 @@ class TwietterApiProvider extends ChangeNotifier {
   }
 
   Future<void> _getData() async {
-    Response response = await twitterApi!.client.get(Uri.https(
-        'api.twitter.com',
-        '1.1/statuses/home_timeline.json',
-        <String, String>{'count': '5', 'tweet_mode': 'extended'}));
-    var res = response.body;
-    List<Map<String, dynamic>> data =
-        List<Map<String, dynamic>>.from(json.decode(response.body));
-    data.forEach((tweet) => print(tweet["full_text"]));
+    try {
+      Response response = await twitterApi!.client.get(Uri.https(
+          'api.twitter.com',
+          '1.1/statuses/home_timeline.json', <String, String>{
+        'count': '7',
+        'tweet_mode': 'extended',
+        'include_entities': 'false'
+      }));
+      var res = response.body;
+      List<Map<String, dynamic>> data =
+          List<Map<String, dynamic>>.from(json.decode(response.body));
+
+      data.forEach((tweet) => _listOfTweets.add(tweet));
+      print(_listOfTweets);
+
+      notifyListeners();
+    } catch (error) {
+      print('error while requesting home timeline: $error');
+    }
   }
 }
