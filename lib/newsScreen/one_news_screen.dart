@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:polmeme/newsScreen/twitter_api.dart';
+import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 
@@ -75,7 +75,7 @@ class _OneNewsState extends State<OneNews> {
               ),
               Container(
                 decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 39, 116, 90),
+                  color: const Color(0xff1B6569),
                   borderRadius: BorderRadius.only(
                     bottomRight: Radius.circular(15),
                     bottomLeft: Radius.circular(15),
@@ -86,7 +86,10 @@ class _OneNewsState extends State<OneNews> {
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Provider.of<TwietterApiProvider>(context,
+                              listen: false);
+                        },
                         child: const Text(
                           "Pokaż meme",
                           style: TextStyle(color: Colors.white),
