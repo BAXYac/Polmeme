@@ -2,12 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OneNews extends StatelessWidget {
-  OneNews({Key? key, required this.tweetTxt, required this.userName})
+  OneNews(
+      {Key? key,
+      required this.tweetTxt,
+      required this.userName,
+      required this.screenName})
       : super(key: key);
   final String tweetTxt;
   final String userName;
+  final String screenName;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -21,21 +27,31 @@ class OneNews extends StatelessWidget {
           color: Color.fromARGB(255, 142, 179, 166),
           child: Column(
             children: [
-              Row(
-                children: [
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8.0),
-                    child: Icon(Icons.photo),
-                  ),
-                  Text(userName)
-                ],
+              Container(
+                height: MediaQuery.of(context).size.height * 0.03,
+                color: Colors.white30,
+                child: Row(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 8.0),
+                      child: SvgPicture.asset("assets/icons8-twitter (1).svg",
+                          color: Colors.blue),
+                    ),
+                    Text(userName,
+                        style: TextStyle(fontWeight: FontWeight.bold)),
+                    Text(" @" + screenName)
+                  ],
+                ),
               ),
               Expanded(
                 child: InkWell(
                   onTap: () {},
-                  child: Text(
-                    tweetTxt,
-                    style: TextStyle(color: Colors.black),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      tweetTxt,
+                      style: TextStyle(color: Colors.black),
+                    ),
                   ),
                 ),
               ),

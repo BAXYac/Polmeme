@@ -71,6 +71,8 @@ class _ListOfNewsState extends State<ListOfNews> {
           }
         },
         child: OneNews(
+            screenName: Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets[index]["user"]["screen_name"],
             userName: Provider.of<TwietterApiProvider>(context, listen: false)
                 .listOfTweets[index]["user"]["name"],
             tweetTxt: Provider.of<TwietterApiProvider>(context, listen: false)
