@@ -1,33 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ThemeProvider extends ChangeNotifier {
-  ThemeMode themeMode = ThemeMode.light;
+  late ThemeData _selectedTheme;
 
-  bool get isDarkMode => themeMode == ThemeMode.dark;
+  ThemeData light = ThemeData.light().copyWith(
+    backgroundColor: Color.fromARGB(255, 142, 179, 166),
+    appBarTheme: AppBarTheme(
+      // color: Colors.white,
+      titleTextStyle: TextStyle(
+          color: Colors.black, fontSize: 20.00, fontWeight: FontWeight.bold),
+    ),
+  );
 
-  void toggleTheme(bool isOn) {
-    themeMode = isOn ? ThemeMode.dark : ThemeMode.light;
+  ThemeData dark = ThemeData.dark().copyWith(primaryColor: Colors.black);
+
+  ThemeProvider({bool isDarkMode = false}) {
+    _selectedTheme = isDarkMode ? dark : light;
+  }
+
+  Future<void> swapTheme() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if (_selectedTheme == dark) {
+      _selectedTheme = light;
+      prefs.setBool('isDarkTheme', false);
+    } else {
+      _selectedTheme = dark;
+      prefs.setBool('isDarkTheme', true);
+    }
     notifyListeners();
   }
-}
 
-class MyThemes {
-  static final darkTheme = ThemeData(
-    drawerTheme: DrawerThemeData(backgroundColor: Color(0xFFE0E0E12)),
-    backgroundColor: Color(0xFFE0E0E12),
-    textTheme: TextTheme(bodyText1: TextStyle(color: Colors.white)),
-    scaffoldBackgroundColor: Color(0xFFE0E0E12),
-    colorScheme: ColorScheme.dark(),
-    primaryColor: Colors.black,
-    iconTheme: IconThemeData(color: Color(0xff1B6569)),
-  );
-  static final lightTheme = ThemeData(
-    drawerTheme: DrawerThemeData(backgroundColor: Colors.white10),
-    backgroundColor: Color(0xff1B6569),
-    scaffoldBackgroundColor: Colors.white,
-    colorScheme: ColorScheme.light(),
-    primaryColor: Colors.white,
-    iconTheme: IconThemeData(color: Color(0xff1B6569)),
-  );
+  ThemeData get getTheme => _selectedTheme;
 }

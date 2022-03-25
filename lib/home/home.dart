@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
-import 'package:polmeme/widget/change_theme_button.dart';
+import 'package:polmeme/provider/theme_provider.dart';
+
+import 'package:provider/provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _HomeState extends State<Home> {
   @override
   PageController _controller = PageController();
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: scaffoldKey,
@@ -35,10 +38,15 @@ class _HomeState extends State<Home> {
             const ListTile(
               title: Text('Ustawienia'),
             ),
-            const ListTile(
-              leading: Text("Light mode"),
-              title: ChangeThemeButtonWidget(),
-              trailing: Text("Dark mode"),
+            ListTile(
+              title: Text('Ciemny motyw?'),
+              trailing: IconButton(
+                  onPressed: () {
+                    ThemeProvider themeProvider =
+                        Provider.of<ThemeProvider>(context, listen: false);
+                    themeProvider.swapTheme();
+                  },
+                  icon: Icon(Icons.brightness_6)),
             ),
             const ListTile(
               title: Text('Zmiana hasła'),
