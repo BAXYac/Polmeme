@@ -1,7 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:polmeme/auth/auth_state.dart';
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/home/home.dart';
+import 'package:polmeme/newsScreen/news_screen.dart';
 import 'package:polmeme/provider/theme_provider.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +16,7 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -22,6 +27,12 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TwietterApiProvider()),
+          ChangeNotifierProvider(
+            create: (context) => AuthState(FirebaseAuth.instance),
+          ),
+          StreamProvider(
+              create: (context) => context.read<AuthState>().userChanges,
+              initialData: null),
         ],
         child: ChangeNotifierProvider(
             create: (context) => ThemeProvider(),
@@ -38,8 +49,18 @@ class MyApp extends StatelessWidget {
                 //   primarySwatch: Colors.blue,
                 //   scaffoldBackgroundColor: const Color(0xFFE0E0E12),
                 // ),
-                home: LoginPage(),
+                home: LoginHandler(),
               );
             }),
       );
+}
+
+class LoginHandler extends StatelessWidget {
+  const LoginHandler({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    var _firebaseUser = context.watch<User?>();
+    return _firebaseUser == null ? LoginPage() : Home();
+  }
 }
