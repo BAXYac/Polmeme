@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'widgets/meme.dart';
 
-class Meme_list extends StatelessWidget {
-  Meme_list({Key? key}) : super(key: key);
+class MemeList extends StatelessWidget {
+  MemeList({Key? key}) : super(key: key);
   var icon = Icons.abc;
   var color = Colors.white;
 

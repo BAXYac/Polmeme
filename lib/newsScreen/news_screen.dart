@@ -49,7 +49,7 @@ class _ListOfNewsState extends State<ListOfNews> {
                             .listOfTweets
                             .length,
                   ),
-                  Meme_list(),
+                  MemeList(),
                 ],
               ),
             ),
