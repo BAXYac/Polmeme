@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TwietterApiProvider extends ChangeNotifier {
   TwitterApi? twitterApi;
@@ -28,6 +29,19 @@ class TwietterApiProvider extends ChangeNotifier {
     _getData();
   }
 
+  launchURL() async {
+    for (var index in _listOfTweets) {
+      List<Map> myUrls = listOfTweets[index]["entities"]["urls"];
+      String url = myUrls[0]["url"];
+      if (await canLaunch(url)) {
+        await launch(url);
+        notifyListeners();
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
+  }
+
   Future<void> _getData() async {
     try {
       Response response = await twitterApi!.client.get(Uri.https(
@@ -35,14 +49,14 @@ class TwietterApiProvider extends ChangeNotifier {
           '1.1/statuses/home_timeline.json', <String, String>{
         'count': '7',
         'tweet_mode': 'extended',
-        'include_entities': 'false'
+        'include_entities': 'false',
       }));
       var res = response.body;
       List<Map<String, dynamic>> data =
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      print(_listOfTweets);
+      // print(_listOfTweets);
 
       notifyListeners();
     } catch (error) {

@@ -15,7 +15,7 @@ Future<void> main() async {
     ChangeNotifierProvider(
       child: MyApp(),
       create: (BuildContext context) =>
-          ThemeProvider(isDarkMode: prefs.getBool('isDarkTheme')),
+          ThemeProvider(isDarkMode: prefs.getBool('isDarkTheme') ?? false),
     ),
   );
 }
