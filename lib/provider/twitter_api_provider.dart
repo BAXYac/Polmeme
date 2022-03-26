@@ -31,7 +31,8 @@ class TwietterApiProvider extends ChangeNotifier {
 
   launchURL() async {
     for (var index in _listOfTweets) {
-      String url = listOfTweets[index]["entities"]["urls"][0]["url"];
+      List<Map> myUrls = listOfTweets[index]["entities"]["urls"];
+      String url = myUrls[0]["url"];
       if (await canLaunch(url)) {
         await launch(url);
         notifyListeners();

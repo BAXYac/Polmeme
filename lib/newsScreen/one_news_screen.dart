@@ -51,7 +51,8 @@ class _OneNewsState extends State<OneNews> {
                         " @" +
                             widget.screenName +
                             "eeeeeeeeeeeeeeeeeerrrrrrrraaaaaaaaaa",
-                        overflow: TextOverflow.ellipsis,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
                       ),
                     )
                   ],
