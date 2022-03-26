@@ -12,15 +12,16 @@ class Memes extends StatelessWidget {
   ];
 
   List<String> newsy = const [
-    "Baba",
-    "zjadła",
-    "kilo",
-    "Ogórków",
+    "assets/img/hot1.png",
+    "assets/img/hot2.png",
+    "assets/img/hot3.png"
   ];
+
+  get currentIndex => null;
 
   @override
   Widget build(BuildContext context) {
-    return meme(index);
+    return currentIndex == 1 ? meme(index) : news(index);
   }
 
   Widget meme(index) {
