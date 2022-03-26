@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
 import 'package:polmeme/widget/change_theme_button.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/twitter_api_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -12,12 +15,14 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isMeme = false;
 
   @override
   PageController _controller = PageController();
   Widget build(BuildContext context) {
+    Provider.of<TwietterApiProvider>(context, listen: false).listOfTweets;
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: scaffoldKey,

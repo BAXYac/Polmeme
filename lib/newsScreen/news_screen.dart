@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 
 import 'package:polmeme/memeScreen/meme_screen.dart';
 import 'package:polmeme/newsScreen/one_news_screen.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/twitter_api_provider.dart';
 
 class ListOfNews extends StatefulWidget {
   ListOfNews({Key? key}) : super(key: key);
@@ -22,7 +25,6 @@ class _ListOfNewsState extends State<ListOfNews> {
     });
   }
 
-  List list_of_news = [OneNews(), OneNews(), OneNews()];
   PageController controller = PageController();
 
   @override
@@ -33,64 +35,6 @@ class _ListOfNewsState extends State<ListOfNews> {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            // Padding(
-            //   padding: const EdgeInsets.all(8.0),
-            //   child: Row(
-            //     mainAxisAlignment: MainAxisAlignment.center,
-            //     children: [
-            //       Container(
-            //         height: 40,
-            //         decoration: BoxDecoration(
-            //           borderRadius: const BorderRadius.only(
-            //               topLeft: Radius.circular(15),
-            //               bottomLeft: Radius.circular(15)),
-            //           color: _clicked == true
-            //               ? Color.fromARGB(255, 39, 116, 90)
-            //               : Colors.black,
-            //         ),
-            //         width: 185,
-            //         child: TextButton(
-            //             child: const Text(
-            //               "NEWS",
-            //               style: TextStyle(color: Colors.white),
-            //             ),
-            //             onPressed: () {
-            //               setState(() {
-            //                 _clicked = true;
-            //               });
-            //               controller.animateToPage(0,
-            //                   duration: const Duration(milliseconds: 400),
-            //                   curve: Curves.easeIn);
-            //             }),
-            //       ),
-            //       Container(
-            //         height: 40,
-            //         width: 185,
-            //         decoration: BoxDecoration(
-            //           borderRadius: const BorderRadius.only(
-            //               topRight: Radius.circular(15),
-            //               bottomRight: Radius.circular(15)),
-            //           color: _clicked == true
-            //               ? Colors.black
-            //               : Color.fromARGB(255, 13, 128, 89),
-            //         ),
-            //         child: TextButton(
-            //             child: const Text(
-            //               "MEME",
-            //               style: TextStyle(color: Colors.white),
-            //             ),
-            //             onPressed: () {
-            //               setState(() {
-            //                 _clicked = false;
-            //               });
-            //               controller.animateToPage(1,
-            //                   duration: const Duration(milliseconds: 400),
-            //                   curve: Curves.easeIn);
-            //             }),
-            //       ),
-            //     ],
-            //   ),
-            // ),
             Expanded(
               child: PageView(
                 onPageChanged: onPageChanged,
@@ -100,7 +44,10 @@ class _ListOfNewsState extends State<ListOfNews> {
                     itemBuilder: (context, index) {
                       return myCard(index);
                     },
-                    itemCount: list_of_news.length,
+                    itemCount:
+                        Provider.of<TwietterApiProvider>(context, listen: false)
+                            .listOfTweets
+                            .length,
                   ),
                   const MemeScreen()
                 ],
@@ -118,9 +65,17 @@ class _ListOfNewsState extends State<ListOfNews> {
         onDismissed: (kierunkowy) {
           if (kierunkowy == DismissDirection.startToEnd ||
               kierunkowy == DismissDirection.endToStart) {
-            list_of_news.removeAt(index);
+            Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets
+                .removeAt(index);
           }
         },
-        child: OneNews());
+        child: OneNews(
+            screenName: Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets[index]["user"]["screen_name"],
+            userName: Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets[index]["user"]["name"],
+            tweetTxt: Provider.of<TwietterApiProvider>(context, listen: false)
+                .listOfTweets[index]["full_text"]));
   }
 }
