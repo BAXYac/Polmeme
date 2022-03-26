@@ -14,21 +14,6 @@ class _MemeListState extends State<MemeList> {
 
   var color = Colors.white;
 
-  var currentIndex = 1;
-
-  int? _currentIndex;
-
-  int? get currentIndex => _currentIndex;
-
-  set currentIndex(int? newIndex) {
-    _currentIndex = newIndex;
-    notifyListeners();
-
-
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,23 +29,25 @@ class _MemeListState extends State<MemeList> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        selectedItemColor: Colors.black,
+        type: BottomNavigationBarType.fixed,
+        selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black45,
+        backgroundColor: Theme.of(context).backgroundColor,
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        // currentIndex: _currentIndex,
+        // onTap: (index) => setState(() => _currentIndex = index),
         iconSize: 30.0,
-        currentIndex: currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
         items: [
           BottomNavigationBarItem(
-            icon: Image.asset("icons/house.png"),
+            icon: Image.asset("assets/icons/hot.png"),
             label: "MEME",
-            activeIcon: Image.asset("icons/house-checked.png"),
+            activeIcon: Image.asset("assets/icons/hot.png"),
           ),
           BottomNavigationBarItem(
-              icon: Image.asset("icons/cloud.png"),
+              icon: Image.asset("assets/icons/wait.png"),
               label: "pogoda",
-              activeIcon: Image.asset("icons/cloud-checked.png")),
+              activeIcon: Image.asset("assets/icons/wait.png")),
         ],
       ),
     );
