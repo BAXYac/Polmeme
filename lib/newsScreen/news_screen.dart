@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:url_launcher/url_launcher.dart';
 import 'package:polmeme/memeScreen/meme_screen.dart';
 import 'package:polmeme/newsScreen/one_news_screen.dart';
 import 'package:provider/provider.dart';
