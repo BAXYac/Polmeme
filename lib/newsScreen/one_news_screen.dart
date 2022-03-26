@@ -11,10 +11,12 @@ class OneNews extends StatefulWidget {
     required this.tweetTxt,
     required this.userName,
     required this.screenName,
+    required this.tweetUrl,
   }) : super(key: key);
   final String tweetTxt;
   final String userName;
   final String screenName;
+  final String tweetUrl;
 
   @override
   State<OneNews> createState() => _OneNewsState();
@@ -51,7 +53,7 @@ class _OneNewsState extends State<OneNews> {
                         " @" +
                             widget.screenName +
                             "eeeeeeeeeeeeeeeeeerrrrrrrraaaaaaaaaa",
-                        overflow: TextOverflow.fade,
+                        overflow: TextOverflow.ellipsis,
                         maxLines: 1,
                       ),
                     )
@@ -62,7 +64,7 @@ class _OneNewsState extends State<OneNews> {
                 child: InkWell(
                   onTap: () {
                     Provider.of<TwietterApiProvider>(context, listen: false)
-                        .launchURL();
+                        .launchURL(widget.tweetUrl);
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
