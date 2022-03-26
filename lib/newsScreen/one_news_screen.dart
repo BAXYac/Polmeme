@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/memeGenerator/meme_generator.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
@@ -74,7 +75,13 @@ class OneNews extends StatelessWidget {
                           style: TextStyle(color: Colors.white),
                         )),
                     TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MemeGen()),
+                          );
+                        },
                         child: const Text(
                           "Stwórz meme",
                           style: TextStyle(color: Colors.white),

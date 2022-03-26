@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polmeme/auth/login_page.dart';
+import 'package:polmeme/provider/meme_gen_provider.dart';
 
 import 'package:polmeme/provider/theme_provider.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TwietterApiProvider()),
+          ChangeNotifierProvider(create: (context) => MemeGenProvider())
         ],
         child: Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {
