@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:polmeme/auth/login_page.dart';
+import 'package:polmeme/memeScreen/meme_screen.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
 import 'package:polmeme/widget/change_theme_button.dart';
 import 'package:provider/provider.dart';
@@ -144,12 +145,7 @@ class _HomeState extends State<Home> {
               controller: _controller,
               children: [
                 ListOfNews(),
-                Container(
-                  child: const Text('Mareeeeeek deeeeeeeej swoje meme'),
-                  height: 50.00,
-                  width: 50.00,
-                  color: Colors.red,
-                )
+                Meme_list(),
               ],
             ),
           ),

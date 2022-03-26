@@ -1,14 +1,27 @@
 import 'package:flutter/material.dart';
+import 'widgets/meme.dart';
 
-class MemeScreen extends StatelessWidget {
-  const MemeScreen({Key? key}) : super(key: key);
+class Meme_list extends StatelessWidget {
+  Meme_list({Key? key}) : super(key: key);
+  var icon = Icons.abc;
+  var color = Colors.white;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        color: Colors.green,
+      body: SingleChildScrollView(
+        child: Center(
+          child: Column(
+            children: [
+              Memes(index: 0),
+              Memes(index: 1),
+              Memes(index: 2),
+            ],
+          ),
+        ),
       ),
+
+      // bottomNavigationBar: ,
     );
   }
 }
