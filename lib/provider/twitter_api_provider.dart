@@ -30,13 +30,15 @@ class TwietterApiProvider extends ChangeNotifier {
   }
 
   launchURL() async {
-    const url = 'https://www.wp.pl/';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
+    for (var index in _listOfTweets) {
+      String url = listOfTweets[index]["entities"]["urls"][0]["url"];
+      if (await canLaunch(url)) {
+        await launch(url);
+        notifyListeners();
+      } else {
+        throw 'Could not launch $url';
+      }
     }
-    notifyListeners();
   }
 
   Future<void> _getData() async {
@@ -53,7 +55,7 @@ class TwietterApiProvider extends ChangeNotifier {
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      print(_listOfTweets);
+      // print(_listOfTweets);
 
       notifyListeners();
     } catch (error) {

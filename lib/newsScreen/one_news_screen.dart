@@ -46,17 +46,22 @@ class _OneNewsState extends State<OneNews> {
                     ),
                     Text(widget.userName,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text(" @" + widget.screenName)
+                    Expanded(
+                      child: Text(
+                        " @" +
+                            widget.screenName +
+                            "eeeeeeeeeeeeeeeeeerrrrrrrraaaaaaaaaa",
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    )
                   ],
                 ),
               ),
               Expanded(
                 child: InkWell(
                   onTap: () {
-                    setState(() {
-                      Provider.of<TwietterApiProvider>(context, listen: false)
-                          .launchURL;
-                    });
+                    Provider.of<TwietterApiProvider>(context, listen: false)
+                        .launchURL();
                   },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
