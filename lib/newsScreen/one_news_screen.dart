@@ -3,17 +3,24 @@ import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:url_launcher/url_launcher.dart';
 
-class OneNews extends StatelessWidget {
-  OneNews(
-      {Key? key,
-      required this.tweetTxt,
-      required this.userName,
-      required this.screenName})
-      : super(key: key);
+class OneNews extends StatefulWidget {
+  OneNews({
+    Key? key,
+    required this.tweetTxt,
+    required this.userName,
+    required this.screenName,
+  }) : super(key: key);
   final String tweetTxt;
   final String userName;
   final String screenName;
+
+  @override
+  State<OneNews> createState() => _OneNewsState();
+}
+
+class _OneNewsState extends State<OneNews> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,19 +44,24 @@ class OneNews extends StatelessWidget {
                       child: SvgPicture.asset("assets/icons8-twitter (1).svg",
                           color: Colors.blue),
                     ),
-                    Text(userName,
+                    Text(widget.userName,
                         style: TextStyle(fontWeight: FontWeight.bold)),
-                    Text(" @" + screenName)
+                    Text(" @" + widget.screenName)
                   ],
                 ),
               ),
               Expanded(
                 child: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    setState(() {
+                      Provider.of<TwietterApiProvider>(context, listen: false)
+                          .launchURL;
+                    });
+                  },
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                      tweetTxt,
+                      widget.tweetTxt,
                       style: TextStyle(color: Colors.black),
                     ),
                   ),

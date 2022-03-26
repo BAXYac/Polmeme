@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TwietterApiProvider extends ChangeNotifier {
   TwitterApi? twitterApi;
@@ -28,6 +29,16 @@ class TwietterApiProvider extends ChangeNotifier {
     _getData();
   }
 
+  launchURL() async {
+    const url = 'https://www.wp.pl/';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+    notifyListeners();
+  }
+
   Future<void> _getData() async {
     try {
       Response response = await twitterApi!.client.get(Uri.https(
@@ -35,7 +46,7 @@ class TwietterApiProvider extends ChangeNotifier {
           '1.1/statuses/home_timeline.json', <String, String>{
         'count': '7',
         'tweet_mode': 'extended',
-        'include_entities': 'false'
+        'include_entities': 'false',
       }));
       var res = response.body;
       List<Map<String, dynamic>> data =
