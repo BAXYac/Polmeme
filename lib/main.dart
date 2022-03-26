@@ -21,37 +21,18 @@ Future<void> main() async {
 
 class MyApp extends StatelessWidget {
   @override
-// <<<<<<< HEAD
-//   Widget build(BuildContext context) {
-//     return Consumer<ThemeProvider>(
-//       builder: (context, themeProvider, child) {
-//         return MaterialApp(
-//           theme: themeProvider.getTheme,
-//           home: LoginPage(),
-//         );
-//       },
-//     );
-//   }
-// =======
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TwietterApiProvider()),
         ],
-        child: ChangeNotifierProvider(
-          create: (context) => ThemeProvider(),
-          builder: (context, _) {
-            final themeProvider = Provider.of<ThemeProvider>(context);
-            return Consumer<ThemeProvider>(
-              builder: (context, themeProvider, child) {
-                return MaterialApp(
-                  theme: themeProvider.getTheme,
-                  debugShowCheckedModeBanner: false,
-                  home: LoginPage(),
-                );
-              },
+        child: Consumer<ThemeProvider>(
+          builder: (context, themeProvider, child) {
+            return MaterialApp(
+              theme: themeProvider.getTheme,
+              debugShowCheckedModeBanner: false,
+              home: LoginPage(),
             );
           },
         ),
       );
-// >>>>>>> develop
 }
