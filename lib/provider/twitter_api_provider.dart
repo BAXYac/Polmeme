@@ -13,6 +13,7 @@ class TwietterApiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  var test;
   TwietterApiProvider() {
     _init();
   }
@@ -56,9 +57,10 @@ class TwietterApiProvider extends ChangeNotifier {
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      // print(_listOfTweets);
+      test = _listOfTweets[0];
 
       notifyListeners();
+      print(_listOfTweets);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }

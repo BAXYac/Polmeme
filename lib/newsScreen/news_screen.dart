@@ -40,17 +40,20 @@ class _ListOfNewsState extends State<ListOfNews> {
                 onPageChanged: onPageChanged,
                 controller: controller,
                 children: [
-                  ListView.builder(
-                    itemBuilder: (context, index) {
-                      return myCard(index);
-                    },
-                    itemCount:
-                        Provider.of<TwietterApiProvider>(context, listen: false)
-                            .listOfTweets
-                            .length,
-                  ),
-                  Meme_list(),
+                  Text(Provider.of<TwietterApiProvider>(context).test)
                 ],
+                // children: [
+                //   ListView.builder(
+                //     itemBuilder: (context, index) {
+                //       return myCard(index);
+                //     },
+                //     itemCount:
+                //         Provider.of<TwietterApiProvider>(context, listen: false)
+                //             .listOfTweets
+                //             .length,
+                //   ),
+                //   Meme_list(),
+                // ],
               ),
             ),
           ],
