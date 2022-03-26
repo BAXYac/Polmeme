@@ -1,53 +1,37 @@
 import 'package:flutter/material.dart';
 
-class Memes extends StatelessWidget {
-  final int? index;
-  Memes({Key? key, this.index}) : super(key: key);
-
-  get currentIndex => null;
-
-  @override
-  Widget build(BuildContext context) {
-    return currentIndex == 1 ? hot_meme(index) : wait_meme(index);
-  }
+class HotMemeScreen extends StatelessWidget {
+  HotMemeScreen({Key? key}) : super(key: key);
 
   List<String> hot = [
     "assets/img/a.jpg",
     "assets/img/b.jpg",
-    "assets/img/c.jpg"
+    "assets/img/c.jpg",
   ];
 
-  List<String> wait = [
-    "assets/img/hot1.png",
-    "assets/img/hot2.png",
-    "assets/img/hot3.png"
-  ];
-
-  Widget hot_meme(index) {
-    return Column(
-      children: [
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(hot[index]),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (BuildContext context2, int index2) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset(hot[index2]),
+                    ),
+                    myButtony(),
+                  ],
+                );
+              },
+              itemCount: hot.length,
+            ),
           ),
-        ),
-        myButtony(),
-      ],
-    );
-  }
-
-  Widget wait_meme(index) {
-    return Column(
-      children: [
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(wait[index]),
-          ),
-        ),
-        myButtony(),
-      ],
+        ],
+      ),
     );
   }
 

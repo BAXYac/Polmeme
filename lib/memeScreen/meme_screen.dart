@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'widgets/meme.dart';
-import 'package:flutter/foundation.dart';
+import 'package:polmeme/memeScreen/screens/hot_screen.dart';
+import 'package:polmeme/memeScreen/screens/wait_screen.dart';
 
 class MemeList extends StatefulWidget {
   MemeList({Key? key}) : super(key: key);
@@ -10,24 +10,23 @@ class MemeList extends StatefulWidget {
 }
 
 class _MemeListState extends State<MemeList> {
-  var icon = Icons.abc;
+  var _selectedIndex = 0;
+  List<Widget> _screens = [
+    HotMemeScreen(),
+    WaitMemes(),
+  ];
 
-  var color = Colors.white;
+  @override
+  void _onItemTapped(int index2) {
+    setState(() {
+      _selectedIndex = index2;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Memes(index: 0),
-              Memes(index: 1),
-              Memes(index: 2),
-            ],
-          ),
-        ),
-      ),
+      body: Center(child: _screens.elementAt(_selectedIndex)),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         selectedItemColor: Colors.blue,
@@ -35,8 +34,8 @@ class _MemeListState extends State<MemeList> {
         backgroundColor: Theme.of(context).backgroundColor,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        // currentIndex: _currentIndex,
-        // onTap: (index) => setState(() => _currentIndex = index),
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
         iconSize: 30.0,
         items: [
           BottomNavigationBarItem(
