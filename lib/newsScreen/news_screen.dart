@@ -39,21 +39,22 @@ class _ListOfNewsState extends State<ListOfNews> {
               child: PageView(
                 onPageChanged: onPageChanged,
                 controller: controller,
-                children: [
-                  Text(Provider.of<TwietterApiProvider>(context).test)
-                ],
                 // children: [
-                //   ListView.builder(
-                //     itemBuilder: (context, index) {
-                //       return myCard(index);
-                //     },
-                //     itemCount:
-                //         Provider.of<TwietterApiProvider>(context, listen: false)
-                //             .listOfTweets
-                //             .length,
-                //   ),
-                //   Meme_list(),
+                //   Text(
+                //       Provider.of<TwietterApiProvider>(context).test.toString())
                 // ],
+                children: [
+                  ListView.builder(
+                    itemBuilder: (context, index) {
+                      return myCard(index);
+                    },
+                    itemCount:
+                        Provider.of<TwietterApiProvider>(context, listen: false)
+                            .listOfTweets
+                            .length,
+                  ),
+                  Meme_list(),
+                ],
               ),
             ),
           ],

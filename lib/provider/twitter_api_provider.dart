@@ -32,10 +32,11 @@ class TwietterApiProvider extends ChangeNotifier {
 
   launchURL() async {
     for (var index in _listOfTweets) {
-      List<Map> myUrls = listOfTweets[index]["entities"]["urls"];
-      String url = myUrls[0]["url"];
+      String url =
+          _listOfTweets[0]["extended_entities"]["media"][0]["expanded_url"];
       if (await canLaunch(url)) {
         await launch(url);
+        print(url);
         notifyListeners();
       } else {
         throw 'Could not launch $url';
@@ -57,10 +58,10 @@ class TwietterApiProvider extends ChangeNotifier {
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      test = _listOfTweets[0];
+      test = _listOfTweets[0]["extended_entities"]["media"][0]["expanded_url"];
 
       notifyListeners();
-      print(_listOfTweets);
+      // print(test);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }
