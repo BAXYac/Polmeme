@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
+
 import 'package:polmeme/provider/theme_provider.dart';
 
 import 'package:provider/provider.dart';
+
+import '../provider/twitter_api_provider.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  @override
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isMeme = false;
 
@@ -21,6 +25,9 @@ class _HomeState extends State<Home> {
   PageController _controller = PageController();
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
+
+    Provider.of<TwietterApiProvider>(context, listen: false).listOfTweets;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: scaffoldKey,
@@ -148,7 +155,7 @@ class _HomeState extends State<Home> {
               children: [
                 ListOfNews(),
                 Container(
-                  child: const Text('Meme Page'),
+                  child: const Text('Mareeeeeek deeeeeeeej swoje meme'),
                   height: 50.00,
                   width: 50.00,
                   color: Colors.red,
