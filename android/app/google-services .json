@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "581157590408",
+    "project_id": "polmeme",
+    "storage_bucket": "polmeme.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:581157590408:android:80324fa72d06bb67bc563d",
+        "android_client_info": {
+          "package_name": "it.baxy.polmeme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "581157590408-h99lcn0c72epj7bbsukf9jqmllg9me4m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAuHHMBSgP7tRrFz58x6xm6DtCHizdVn78"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "581157590408-h99lcn0c72epj7bbsukf9jqmllg9me4m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
