@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class HotMemeScreen extends StatelessWidget {
-  HotMemeScreen({Key? key}) : super(key: key);
+class HotMeme extends StatelessWidget {
+  HotMeme({Key? key}) : super(key: key);
 
   List<String> hot = [
     "assets/img/a.jpg",
