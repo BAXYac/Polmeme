@@ -27,8 +27,6 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    Provider.of<TwietterApiProvider>(context, listen: false).listOfTweets;
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: scaffoldKey,

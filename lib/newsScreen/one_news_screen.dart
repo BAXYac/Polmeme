@@ -12,11 +12,13 @@ class OneNews extends StatefulWidget {
     required this.userName,
     required this.screenName,
     required this.tweetUrl,
+    required this.currentIndex,
   }) : super(key: key);
   final String tweetTxt;
   final String userName;
   final String screenName;
   final String tweetUrl;
+  final dynamic currentIndex;
 
   @override
   State<OneNews> createState() => _OneNewsState();
@@ -26,7 +28,7 @@ class _OneNewsState extends State<OneNews> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 240,
+      height: 280,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
@@ -66,12 +68,35 @@ class _OneNewsState extends State<OneNews> {
                     Provider.of<TwietterApiProvider>(context, listen: false)
                         .launchURL(widget.tweetUrl);
                   },
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      widget.tweetTxt,
-                      style: TextStyle(color: Colors.black),
-                    ),
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text(
+                          widget.tweetTxt,
+                          style: TextStyle(color: Colors.black, fontSize: 12),
+                        ),
+                      ),
+                      widget.currentIndex["extended_entities"] != null
+                          ? Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          widget.currentIndex["entities"]
+                                              ["media"][0]["url"]),
+                                      fit: BoxFit.cover)),
+                            )
+                          : Container(
+                              // color: Colors.pink,
+                              // decoration: BoxDecoration(
+                              //     image: DecorationImage(
+                              //         image: NetworkImage(widget
+                              //                 .currentIndex["extended_entities"]
+                              //             ["media"][0]["media_url_https"]),
+                              //         fit: BoxFit.cover)),
+                              )
+                    ],
                   ),
                 ),
               ),
