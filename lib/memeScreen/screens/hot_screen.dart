@@ -16,6 +16,7 @@ class HotMemeScreen extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.builder(
+              scrollDirection: Axis.vertical,
               itemBuilder: (BuildContext context2, int index2) {
                 return Column(
                   children: [
