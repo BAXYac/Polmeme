@@ -12,14 +12,14 @@ class MemeList extends StatefulWidget {
 class _MemeListState extends State<MemeList> {
   var _selectedIndex = 0;
   List<Widget> _screens = [
-    HotMemeScreen(),
+    HotMeme(),
     WaitMemes(),
   ];
 
   @override
-  void _onItemTapped(int index2) {
+  void _onItemTapped(int index) {
     setState(() {
-      _selectedIndex = index2;
+      _selectedIndex = index;
     });
   }
 

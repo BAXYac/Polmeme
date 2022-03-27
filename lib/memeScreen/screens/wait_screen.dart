@@ -1,48 +1,37 @@
 import 'package:flutter/material.dart';
 
 class WaitMemes extends StatelessWidget {
-  final int? index;
-  WaitMemes({Key? key, this.index}) : super(key: key);
-
-  get currentIndex => null;
-
-  @override
-  Widget build(BuildContext context) {
-    return wait_meme();
-  }
+  WaitMemes({Key? key}) : super(key: key);
 
   List<String> wait = [
     "assets/img/hot1.png",
     "assets/img/hot2.png",
     "assets/img/hot3.png"
   ];
-
-  Widget wait_meme() {
-    return ListView(
-      scrollDirection: Axis.vertical,
-      children: [
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(wait[0]),
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              scrollDirection: Axis.vertical,
+              itemBuilder: (BuildContext context2, int index) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset(wait[index]),
+                    ),
+                    myButtony(),
+                  ],
+                );
+              },
+              itemCount: wait.length,
+            ),
           ),
-        ),
-        myButtony(),
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(wait[1]),
-          ),
-        ),
-        myButtony(),
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(wait[2]),
-          ),
-        ),
-        myButtony(),
-      ],
+        ],
+      ),
     );
   }
 
