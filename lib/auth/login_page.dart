@@ -91,46 +91,35 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 320,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 1.5),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+                  TextFormField(
+                    keyboardType: TextInputType.emailAddress,
+                    controller: _emailController,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter your e-mail";
+                      } else if (!RegExp(
+                              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
+                          .hasMatch(_emailController.text)) {
+                        return "Please enter a valid e-mail";
+                      }
+                      return null;
+                    },
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      filled: true,
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
                       ),
-                    ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.emailAddress,
-                      controller: _emailController,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter your e-mail";
-                        } else if (!RegExp(
-                                r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
-                            .hasMatch(_emailController.text)) {
-                          return "Please enter a valid e-mail";
-                        }
-                        return null;
-                      },
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        filled: true,
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                        ),
-                        fillColor: Color.fromARGB(255, 0, 0, 0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ),
+                      fillColor: Color.fromARGB(255, 0, 0, 0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
                         ),
                       ),
                     ),
@@ -157,61 +146,50 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 320,
-                    height: 40,
-                    decoration: BoxDecoration(
-                      border: Border.all(color: Colors.white, width: 1.5),
-                      borderRadius: BorderRadius.only(
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+                  TextFormField(
+                    keyboardType: TextInputType.visiblePassword,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400),
+                    decoration: InputDecoration(
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPassword = !_showPassword;
+                          });
+                        },
+                        icon: Icon(
+                          _showPassword
+                              ? Icons.visibility
+                              : Icons.visibility_off,
+                        ),
+                        color: Color(0xFF1B6569),
+                      ),
+                      filled: true,
+                      labelStyle: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                      ),
+                      fillColor: Color.fromARGB(255, 0, 0, 0),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(color: Colors.white),
+                        borderRadius: BorderRadius.only(
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
                       ),
                     ),
-                    child: TextFormField(
-                      keyboardType: TextInputType.visiblePassword,
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w400),
-                      decoration: InputDecoration(
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _showPassword = !_showPassword;
-                            });
-                          },
-                          icon: Icon(
-                            _showPassword
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                          ),
-                          color: Color(0xFF1B6569),
-                        ),
-                        filled: true,
-                        labelStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: 25,
-                        ),
-                        fillColor: Color.fromARGB(255, 0, 0, 0),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white),
-                          borderRadius: BorderRadius.only(
-                            bottomRight: Radius.circular(10),
-                            bottomLeft: Radius.circular(10),
-                          ),
-                        ),
-                      ),
-                      controller: _passwordController,
-                      obscureText: !_showPassword,
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return "Please enter your password";
-                        } else if (value.length < 8) {
-                          return "Password need to be 8 characters long";
-                        }
-                        return null;
-                      },
-                    ),
+                    controller: _passwordController,
+                    obscureText: !_showPassword,
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "Please enter your password";
+                      } else if (value.length < 8) {
+                        return "Password need to be 8 characters long";
+                      }
+                      return null;
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20),
