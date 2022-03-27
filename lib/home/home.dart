@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
+
 import 'package:polmeme/auth/login_page.dart';
+import 'package:polmeme/memeScreen/meme_screen.dart';
 import 'package:polmeme/newsScreen/news_screen.dart';
-import 'package:polmeme/widget/change_theme_button.dart';
+
+import 'package:polmeme/provider/theme_provider.dart';
+
 import 'package:provider/provider.dart';
 
 import '../provider/twitter_api_provider.dart';
@@ -22,7 +25,10 @@ class _HomeState extends State<Home> {
   @override
   PageController _controller = PageController();
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     Provider.of<TwietterApiProvider>(context, listen: false).listOfTweets;
+
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       key: scaffoldKey,
@@ -40,10 +46,15 @@ class _HomeState extends State<Home> {
             const ListTile(
               title: Text('Ustawienia'),
             ),
-            const ListTile(
-              leading: Text("Light mode"),
-              title: ChangeThemeButtonWidget(),
-              trailing: Text("Dark mode"),
+            ListTile(
+              title: Text('Ciemny motyw?'),
+              trailing: IconButton(
+                  onPressed: () {
+                    ThemeProvider themeProvider =
+                        Provider.of<ThemeProvider>(context, listen: false);
+                    themeProvider.swapTheme();
+                  },
+                  icon: Icon(Icons.brightness_6)),
             ),
             const ListTile(
               title: Text('Zmiana hasła'),
@@ -144,12 +155,7 @@ class _HomeState extends State<Home> {
               controller: _controller,
               children: [
                 ListOfNews(),
-                Container(
-                  child: const Text('Mareeeeeek deeeeeeeej swoje meme'),
-                  height: 50.00,
-                  width: 50.00,
-                  color: Colors.red,
-                )
+                MemeList(),
               ],
             ),
           ),

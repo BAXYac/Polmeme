@@ -39,6 +39,8 @@ dependencies:
   firebase_auth: ^3.3.11
   firebase_core: ^1.13.1 
   cloud_firestore: ^3.1.10
+  shared_preferences: ^2.0.13
+
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +53,7 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^1.0.0
   flutter_svg: ^1.0.3
+  url_launcher: ^6.0.20
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -66,6 +69,8 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/
+    - assets/img/
+    - assets/icons/
  
 
   # An image asset can refer to one or more resolution-specific "variants", see
