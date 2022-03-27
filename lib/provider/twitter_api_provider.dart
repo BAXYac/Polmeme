@@ -15,10 +15,10 @@ class TwietterApiProvider extends ChangeNotifier {
 
   var test;
   TwietterApiProvider() {
-    _init();
+    init();
   }
 
-  _init() {
+  init() {
     twitterApi = TwitterApi(
       client: TwitterClient(
         consumerKey: '8vwngwZhHGwVI0Vz8C7BZDX2P',
@@ -27,7 +27,7 @@ class TwietterApiProvider extends ChangeNotifier {
         secret: 'PIuxfZu6yl14zYCoSgUp4q8PqtgW7hgaZ5xFcPk52kRYY',
       ),
     );
-    _getData();
+    getData();
   }
 
   launchURL(url) async {
@@ -43,7 +43,7 @@ class TwietterApiProvider extends ChangeNotifier {
     // }
   }
 
-  Future<void> _getData() async {
+  Future<void> getData() async {
     try {
       Response response = await twitterApi!.client.get(Uri.https(
           'api.twitter.com',
@@ -57,8 +57,8 @@ class TwietterApiProvider extends ChangeNotifier {
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      test = _listOfTweets[0]["entities"];
-      print(_listOfTweets[0]["entities"]);
+      test = _listOfTweets[0];
+      print(_listOfTweets);
 
       notifyListeners();
       // print(test);
