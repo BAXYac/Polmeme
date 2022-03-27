@@ -1,45 +1,37 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class Memes extends StatelessWidget {
-  final int? index;
-  Memes({Key? key, this.index}) : super(key: key);
+class HotMemeScreen extends StatelessWidget {
+  HotMemeScreen({Key? key}) : super(key: key);
 
-  List<String> memy = const [
+  List<String> hot = [
     "assets/img/a.jpg",
     "assets/img/b.jpg",
-    "assets/img/c.jpg"
-  ];
-
-  List<String> newsy = const [
-    "Baba",
-    "zjadła",
-    "kilo",
-    "Ogórków",
+    "assets/img/c.jpg",
   ];
 
   @override
   Widget build(BuildContext context) {
-    return meme(index);
-  }
-
-  Widget meme(index) {
-    return Column(
-      children: [
-        Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Image.asset(memy[index]),
+    return Scaffold(
+      body: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (BuildContext context2, int index2) {
+                return Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Image.asset(hot[index2]),
+                    ),
+                    myButtony(),
+                  ],
+                );
+              },
+              itemCount: hot.length,
+            ),
           ),
-        ),
-        myButtony(),
-      ],
-    );
-  }
-
-  Widget news(index) {
-    return Container(
-      child: Text(newsy[index]),
+        ],
+      ),
     );
   }
 

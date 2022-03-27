@@ -155,7 +155,7 @@ class _HomeState extends State<Home> {
               controller: _controller,
               children: [
                 ListOfNews(),
-                Meme_list(),
+                MemeList(),
               ],
             ),
           ),
