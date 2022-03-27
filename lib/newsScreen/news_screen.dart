@@ -39,6 +39,10 @@ class _ListOfNewsState extends State<ListOfNews> {
               child: PageView(
                 onPageChanged: onPageChanged,
                 controller: controller,
+                // children: [
+                //   Text(
+                //       Provider.of<TwietterApiProvider>(context).test.toString())
+                // ],
                 children: [
                   ListView.builder(
                     itemBuilder: (context, index) {
@@ -60,6 +64,8 @@ class _ListOfNewsState extends State<ListOfNews> {
   }
 
   Widget myCard(index) {
+    var myProvider = Provider.of<TwietterApiProvider>(context, listen: false)
+        .listOfTweets[index];
     return Dismissible(
         key: UniqueKey(),
         onDismissed: (kierunkowy) {
@@ -71,11 +77,10 @@ class _ListOfNewsState extends State<ListOfNews> {
           }
         },
         child: OneNews(
-            screenName: Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets[index]["user"]["screen_name"],
-            userName: Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets[index]["user"]["name"],
-            tweetTxt: Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets[index]["full_text"]));
+            tweetUrl:
+                "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
+            screenName: myProvider["user"]["screen_name"],
+            userName: myProvider["user"]["name"],
+            tweetTxt: myProvider["full_text"]));
   }
 }

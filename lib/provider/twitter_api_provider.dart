@@ -13,6 +13,7 @@ class TwietterApiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  var test;
   TwietterApiProvider() {
     _init();
   }
@@ -29,17 +30,17 @@ class TwietterApiProvider extends ChangeNotifier {
     _getData();
   }
 
-  launchURL() async {
-    for (var index in _listOfTweets) {
-      List<Map> myUrls = listOfTweets[index]["entities"]["urls"];
-      String url = myUrls[0]["url"];
-      if (await canLaunch(url)) {
-        await launch(url);
-        notifyListeners();
-      } else {
-        throw 'Could not launch $url';
-      }
+  launchURL(url) async {
+    // for (var index in _listOfTweets) {
+    //String url = _listOfTweets[index]["extended_entities"]["media"][0]["expanded_url"];
+    if (await canLaunch(url)) {
+      await launch(url);
+      print(url);
+      notifyListeners();
+    } else {
+      throw 'Could not launch $url';
     }
+    // }
   }
 
   Future<void> _getData() async {
@@ -49,16 +50,18 @@ class TwietterApiProvider extends ChangeNotifier {
           '1.1/statuses/home_timeline.json', <String, String>{
         'count': '7',
         'tweet_mode': 'extended',
-        'include_entities': 'false',
+        'include_entities': 'true',
       }));
       var res = response.body;
       List<Map<String, dynamic>> data =
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      // print(_listOfTweets);
+      test = _listOfTweets[0]["entities"];
+      print(_listOfTweets[0]["entities"]);
 
       notifyListeners();
+      // print(test);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }
