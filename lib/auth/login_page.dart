@@ -1,9 +1,13 @@
 // ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:polmeme/auth/auth_state.dart';
 import 'package:polmeme/auth/style.dart';
 import 'package:polmeme/home/home.dart';
+import 'package:polmeme/newsScreen/news_screen.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -19,6 +23,8 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(Provider.of<AuthState>(context).userChanges);
+
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.black, actions: <Widget>[
         OutlinedButton(
@@ -100,7 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                       controller: _emailController,
                       validator: (value) {
                         if (value!.isEmpty) {
-                          return "Please enter your -mail";
+                          return "Please enter your e-mail";
                         } else if (!RegExp(
                                 r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^`{|}~]+@[a-zA-Z0-9]+.[a-zA-Z]+")
                             .hasMatch(_emailController.text)) {
@@ -218,7 +224,47 @@ class _LoginPageState extends State<LoginPage> {
                             fontSize: 24,
                             color: Color.fromARGB(255, 255, 255, 255)),
                       ),
-                      onPressed: _signUp ? () {} : () {},
+                      onPressed: _signUp
+                          ? () {
+                              if (_formKey.currentState!.validate()) {
+                                Provider.of<AuthState>(
+                                  context,
+                                  listen: false,
+                                )
+                                    .signOnWithEmail(
+                                        email: _emailController.text.trim(),
+                                        password: _passwordController.text)
+                                    .whenComplete(() {
+                                  if (context.read<User?>() != null) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Home(),
+                                        ));
+                                  }
+                                });
+                              }
+                            }
+                          : () {
+                              if (_formKey.currentState!.validate()) {
+                                Provider.of<AuthState>(
+                                  context,
+                                  listen: false,
+                                )
+                                    .signInWithEmail(
+                                        email: _emailController.text.trim(),
+                                        password: _passwordController.text)
+                                    .whenComplete(() {
+                                  if (context.read<User?>() != null) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => Home(),
+                                        ));
+                                  }
+                                });
+                              }
+                            },
                     ),
                   ),
                   Center(
