@@ -32,20 +32,18 @@ class _MemeListState extends State<MemeList> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.black45,
         backgroundColor: Theme.of(context).backgroundColor,
-        showSelectedLabels: false,
-        showUnselectedLabels: false,
         currentIndex: _selectedIndex,
         onTap: _onItemTapped,
         iconSize: 30.0,
         items: [
           BottomNavigationBarItem(
             icon: Image.asset("assets/icons/hot.png"),
-            label: "MEME",
+            label: "MEMY",
             activeIcon: Image.asset("assets/icons/hot.png"),
           ),
           BottomNavigationBarItem(
               icon: Image.asset("assets/icons/wait.png"),
-              label: "pogoda",
+              label: "POCZEKALNIA",
               activeIcon: Image.asset("assets/icons/wait.png")),
         ],
       ),
