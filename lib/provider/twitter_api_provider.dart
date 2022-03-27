@@ -13,11 +13,12 @@ class TwietterApiProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  var test;
   TwietterApiProvider() {
-    _init();
+    init();
   }
 
-  _init() {
+  init() {
     twitterApi = TwitterApi(
       client: TwitterClient(
         consumerKey: '8vwngwZhHGwVI0Vz8C7BZDX2P',
@@ -26,39 +27,41 @@ class TwietterApiProvider extends ChangeNotifier {
         secret: 'PIuxfZu6yl14zYCoSgUp4q8PqtgW7hgaZ5xFcPk52kRYY',
       ),
     );
-    _getData();
+    getData();
   }
 
-  launchURL() async {
-    for (var index in _listOfTweets) {
-      List<Map> myUrls = listOfTweets[index]["entities"]["urls"];
-      String url = myUrls[0]["url"];
-      if (await canLaunch(url)) {
-        await launch(url);
-        notifyListeners();
-      } else {
-        throw 'Could not launch $url';
-      }
+  launchURL(url) async {
+    // for (var index in _listOfTweets) {
+    //String url = _listOfTweets[index]["extended_entities"]["media"][0]["expanded_url"];
+    if (await canLaunch(url)) {
+      await launch(url);
+      print(url);
+      notifyListeners();
+    } else {
+      throw 'Could not launch $url';
     }
+    // }
   }
 
-  Future<void> _getData() async {
+  Future<void> getData() async {
     try {
       Response response = await twitterApi!.client.get(Uri.https(
           'api.twitter.com',
           '1.1/statuses/home_timeline.json', <String, String>{
         'count': '7',
         'tweet_mode': 'extended',
-        'include_entities': 'false',
+        'include_entities': 'true',
       }));
       var res = response.body;
       List<Map<String, dynamic>> data =
           List<Map<String, dynamic>>.from(json.decode(response.body));
 
       data.forEach((tweet) => _listOfTweets.add(tweet));
-      // print(_listOfTweets);
+      test = _listOfTweets[0];
+      print(_listOfTweets);
 
       notifyListeners();
+      // print(test);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }

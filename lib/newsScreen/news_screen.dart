@@ -36,22 +36,35 @@ class _ListOfNewsState extends State<ListOfNews> {
         child: Column(
           children: [
             Expanded(
-              child: PageView(
-                onPageChanged: onPageChanged,
-                controller: controller,
-                children: [
-                  ListView.builder(
-                    itemBuilder: (context, index) {
-                      return myCard(index);
-                    },
-                    itemCount:
-                        Provider.of<TwietterApiProvider>(context, listen: false)
-                            .listOfTweets
-                            .length,
-                  ),
-                  Meme_list(),
-                ],
-              ),
+              child: FutureBuilder(
+                  future:
+                      Provider.of<TwietterApiProvider>(context, listen: false)
+                          .getData(),
+                  builder: (BuildContext context, AsyncSnapshot snapshot) {
+                    switch (snapshot.connectionState) {
+                      case ConnectionState.waiting:
+                        return Center(child: CircularProgressIndicator());
+                      default:
+                        if (snapshot.hasError)
+                          return Text('Error: ${snapshot.error}');
+                        else {
+                          return ListView.builder(
+                            itemBuilder: (context, index) {
+                              return myCard(index);
+                            },
+                            itemCount: Provider.of<TwietterApiProvider>(context,
+                                    listen: false)
+                                .listOfTweets
+                                .length,
+                          );
+                        }
+                    }
+                  }),
+
+              // children: [
+              //   Text(
+              //       Provider.of<TwietterApiProvider>(context).test.toString())
+              // ],
             ),
           ],
         ),
@@ -60,6 +73,8 @@ class _ListOfNewsState extends State<ListOfNews> {
   }
 
   Widget myCard(index) {
+    var myProvider = Provider.of<TwietterApiProvider>(context, listen: false)
+        .listOfTweets[index];
     return Dismissible(
         key: UniqueKey(),
         onDismissed: (kierunkowy) {
@@ -71,11 +86,11 @@ class _ListOfNewsState extends State<ListOfNews> {
           }
         },
         child: OneNews(
-            screenName: Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets[index]["user"]["screen_name"],
-            userName: Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets[index]["user"]["name"],
-            tweetTxt: Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets[index]["full_text"]));
+            currentIndex: myProvider,
+            tweetUrl:
+                "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
+            screenName: myProvider["user"]["screen_name"],
+            userName: myProvider["user"]["name"],
+            tweetTxt: myProvider["full_text"]));
   }
 }
