@@ -28,7 +28,6 @@ class _OneNewsState extends State<OneNews> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 300,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
@@ -62,12 +61,13 @@ class _OneNewsState extends State<OneNews> {
                   ],
                 ),
               ),
-              Expanded(
-                child: InkWell(
-                  onTap: () {
-                    Provider.of<TwietterApiProvider>(context, listen: false)
-                        .launchURL(widget.tweetUrl);
-                  },
+              InkWell(
+                onTap: () {
+                  Provider.of<TwietterApiProvider>(context, listen: false)
+                      .launchURL(widget.tweetUrl);
+                },
+                child: Container(
+                  padding: EdgeInsets.all(8),
                   child: Column(
                     children: [
                       Text(

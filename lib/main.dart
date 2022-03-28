@@ -35,6 +35,9 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => AuthState(FirebaseAuth.instance),
           ),
+          StreamProvider(
+              create: (context) => context.read<AuthState>().userChanges,
+              initialData: null),
         ],
         child: Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {

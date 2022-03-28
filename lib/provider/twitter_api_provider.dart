@@ -48,7 +48,7 @@ class TwietterApiProvider extends ChangeNotifier {
         'include_rts': 'false',
         'lang': 'pl',
         'tweet_mode': 'extended',
-        'result_type': 'mixed'
+        'result_type': 'recent'
       }));
 
       // Response response = await twitterApi!.client.get(Uri.https(
