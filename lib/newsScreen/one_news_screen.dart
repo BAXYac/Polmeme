@@ -28,7 +28,7 @@ class _OneNewsState extends State<OneNews> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 280,
+      height: 300,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Card(
@@ -85,23 +85,28 @@ class _OneNewsState extends State<OneNews> {
                       //                 fit: BoxFit.cover)),
                       //       )
                       // :
-                      Container(
-                        height: MediaQuery.of(context).size.height * 0.15,
-                        width: 210,
-                        decoration: BoxDecoration(
-                            color: Colors.black,
-                            image: DecorationImage(
-                                image: NetworkImage(
-                                    "https://images.pexels.com/photos/1629781/pexels-photo-1629781.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
-                                fit: BoxFit.cover)),
-                        // color: Colors.pink,
-                        // decoration: BoxDecoration(
-                        //     image: DecorationImage(
-                        //         image: NetworkImage(widget
-                        //                 .currentIndex["extended_entities"]
-                        //             ["media"][0]["media_url_https"]),
-                        //         fit: BoxFit.cover)),
-                      )
+                      widget.currentIndex["extended_entities"] == null
+                          ? Container()
+                          : Container(
+                              // height: MediaQuery.of(context).size.height * 0.15,
+                              // width: 210,
+                              // decoration: BoxDecoration(
+                              //     color: Colors.black,
+                              //     image: DecorationImage(
+                              //         image: NetworkImage(
+                              //             "https://images.pexels.com/photos/1629781/pexels-photo-1629781.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                              //         fit: BoxFit.cover)),
+                              //
+                              height: MediaQuery.of(context).size.height * 0.2,
+                              width: 210,
+                              decoration: BoxDecoration(
+                                  color: Colors.pink,
+                                  image: DecorationImage(
+                                      image: NetworkImage(widget
+                                              .currentIndex["extended_entities"]
+                                          ["media"][0]["media_url_https"]),
+                                      fit: BoxFit.cover)),
+                            )
                     ],
                   ),
                 ),

@@ -17,7 +17,6 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
-  await Firebase.initializeApp();
 
   return runApp(
     ChangeNotifierProvider(
@@ -36,16 +35,13 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider(
             create: (context) => AuthState(FirebaseAuth.instance),
           ),
-          StreamProvider(
-              create: (context) => context.read<AuthState>().userChanges,
-              initialData: null),
         ],
         child: Consumer<ThemeProvider>(
           builder: (context, themeProvider, child) {
             return MaterialApp(
               theme: themeProvider.getTheme,
               debugShowCheckedModeBanner: false,
-              home: LoginHandler(),
+              home: Home(),
             );
           },
         ),

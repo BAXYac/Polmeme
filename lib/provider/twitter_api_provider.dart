@@ -41,12 +41,14 @@ class TwietterApiProvider extends ChangeNotifier {
       );
       Response response = await twitterApi!.client.get(Uri.https(
           'api.twitter.com', '1.1/search/tweets.json', <String, String>{
-        'q': "from:tvp_info OR from:tvn24 ",
+        'q':
+            "from:tvp_info OR from:tvn24 OR from:Piechocinski OR from:GrzegorzBraun_ OR from:AndrzejDuda",
         'count': '10',
         'include_entities': 'true',
         'include_rts': 'false',
         'lang': 'pl',
-        'tweet_mode': 'extended'
+        'tweet_mode': 'extended',
+        'result_type': 'mixed'
       }));
 
       // Response response = await twitterApi!.client.get(Uri.https(
