@@ -14,19 +14,6 @@ class ListOfNews extends StatefulWidget {
 }
 
 class _ListOfNewsState extends State<ListOfNews> {
-  bool _clicked = true;
-  void onPageChanged(int page) {
-    setState(() {
-      if (page == 0) {
-        _clicked = true;
-      } else {
-        _clicked = false;
-      }
-    });
-  }
-
-  PageController controller = PageController();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,35 +23,23 @@ class _ListOfNewsState extends State<ListOfNews> {
         child: Column(
           children: [
             Expanded(
-              child: FutureBuilder(
-                  future:
-                      Provider.of<TwietterApiProvider>(context, listen: false)
-                          .getData(),
-                  builder: (BuildContext context, AsyncSnapshot snapshot) {
-                    switch (snapshot.connectionState) {
-                      case ConnectionState.waiting:
-                        return Center(child: CircularProgressIndicator());
-                      default:
-                        if (snapshot.hasError)
-                          return Text('Error: ${snapshot.error}');
-                        else {
-                          return ListView.builder(
-                            itemBuilder: (context, index) {
-                              return myCard(index);
-                            },
-                            itemCount: Provider.of<TwietterApiProvider>(context,
-                                    listen: false)
-                                .listOfTweets
-                                .length,
-                          );
-                        }
-                    }
-                  }),
+              child:
+                  // children: [
+                  //   Text(
+                  //       Provider.of<TwietterApiProvider>(context).test.toString())
+                  // ],
 
-              // children: [
-              //   Text(
-              //       Provider.of<TwietterApiProvider>(context).test.toString())
-              // ],
+                  // dlugosc listy < 1 ? Circular progress indicator:
+
+                  ListView.builder(
+                itemBuilder: (context, index) {
+                  return myCard(index);
+                },
+                itemCount:
+                    Provider.of<TwietterApiProvider>(context, listen: false)
+                        .listOfTweets
+                        .length,
+              ),
             ),
           ],
         ),
@@ -91,6 +66,6 @@ class _ListOfNewsState extends State<ListOfNews> {
                 "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
             screenName: myProvider["user"]["screen_name"],
             userName: myProvider["user"]["name"],
-            tweetTxt: myProvider["full_text"]));
+            tweetTxt: myProvider["text"]));
   }
 }

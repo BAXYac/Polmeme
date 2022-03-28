@@ -70,32 +70,38 @@ class _OneNewsState extends State<OneNews> {
                   },
                   child: Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          widget.tweetTxt,
-                          style: TextStyle(color: Colors.black, fontSize: 12),
-                        ),
+                      Text(
+                        widget.tweetTxt,
+                        style: TextStyle(color: Colors.black, fontSize: 12),
                       ),
-                      widget.currentIndex["extended_entities"] != null
-                          ? Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.black,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          widget.currentIndex["entities"]
-                                              ["media"][0]["url"]),
-                                      fit: BoxFit.cover)),
-                            )
-                          : Container(
-                              // color: Colors.pink,
-                              // decoration: BoxDecoration(
-                              //     image: DecorationImage(
-                              //         image: NetworkImage(widget
-                              //                 .currentIndex["extended_entities"]
-                              //             ["media"][0]["media_url_https"]),
-                              //         fit: BoxFit.cover)),
-                              )
+                      // widget.currentIndex["extended_entities"] != null
+                      //     ? Container(
+                      //         decoration: BoxDecoration(
+                      //             color: Colors.black,
+                      //             image: DecorationImage(
+                      //                 image: NetworkImage(
+                      //                     widget.currentIndex["entities"]
+                      //                         ["media"][0]["url"]),
+                      //                 fit: BoxFit.cover)),
+                      //       )
+                      // :
+                      Container(
+                        height: MediaQuery.of(context).size.height * 0.15,
+                        width: 210,
+                        decoration: BoxDecoration(
+                            color: Colors.black,
+                            image: DecorationImage(
+                                image: NetworkImage(
+                                    "https://images.pexels.com/photos/1629781/pexels-photo-1629781.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
+                                fit: BoxFit.cover)),
+                        // color: Colors.pink,
+                        // decoration: BoxDecoration(
+                        //     image: DecorationImage(
+                        //         image: NetworkImage(widget
+                        //                 .currentIndex["extended_entities"]
+                        //             ["media"][0]["media_url_https"]),
+                        //         fit: BoxFit.cover)),
+                      )
                     ],
                   ),
                 ),

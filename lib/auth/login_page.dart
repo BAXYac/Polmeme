@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:polmeme/auth/style.dart';
 import 'package:polmeme/home/home.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/twitter_api_provider.dart';
 
 class LoginPage extends StatefulWidget {
   @override
