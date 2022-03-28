@@ -41,10 +41,12 @@ class TwietterApiProvider extends ChangeNotifier {
       );
       Response response = await twitterApi!.client.get(Uri.https(
           'api.twitter.com', '1.1/search/tweets.json', <String, String>{
-        'q': "from:tvp_info OR from:tvn24",
+        'q': "from:tvp_info OR from:tvn24 ",
         'count': '10',
         'include_entities': 'true',
-        'include_rts': 'false'
+        'include_rts': 'false',
+        'lang': 'pl',
+        'tweet_mode': 'extended'
       }));
 
       // Response response = await twitterApi!.client.get(Uri.https(
@@ -67,6 +69,7 @@ class TwietterApiProvider extends ChangeNotifier {
           Map<String, dynamic>.from(json.decode(response.body));
       print(data["statuses"][0].keys);
       _listOfTweets = data["statuses"];
+      test = _listOfTweets[0]["entities"];
     } catch (error) {
       print('error while requesting home timeline: $error');
     }

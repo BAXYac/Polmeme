@@ -24,10 +24,8 @@ class _ListOfNewsState extends State<ListOfNews> {
           children: [
             Expanded(
               child:
-                  // children: [
-                  //   Text(
-                  //       Provider.of<TwietterApiProvider>(context).test.toString())
-                  // ],
+                  //  Text(
+                  //     Provider.of<TwietterApiProvider>(context).test.toString())
 
                   // dlugosc listy < 1 ? Circular progress indicator:
 
@@ -66,6 +64,6 @@ class _ListOfNewsState extends State<ListOfNews> {
                 "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
             screenName: myProvider["user"]["screen_name"],
             userName: myProvider["user"]["name"],
-            tweetTxt: myProvider["text"]));
+            tweetTxt: myProvider["full_text"]));
   }
 }
