@@ -71,7 +71,7 @@ class TwietterApiProvider extends ChangeNotifier {
           Map<String, dynamic>.from(json.decode(response.body));
       print(data["statuses"][0].keys);
       _listOfTweets = data["statuses"];
-      test = _listOfTweets[0]["user"]["profile_background_image_url"];
+      test = _listOfTweets[0]["user"]["url"];
       print(test);
     } catch (error) {
       print('error while requesting home timeline: $error');

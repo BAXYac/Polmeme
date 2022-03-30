@@ -13,12 +13,14 @@ class OneNews extends StatelessWidget {
     required this.screenName,
     required this.tweetUrl,
     required this.currentIndex,
+    required this.profileUrl,
   }) : super(key: key);
   final String tweetTxt;
   final String userName;
   final String screenName;
   final String tweetUrl;
   final dynamic currentIndex;
+  final String profileUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -31,9 +33,9 @@ class OneNews extends StatelessWidget {
       child: Column(
         children: [
           Container(
-            height: MediaQuery.of(context).size.height * 0.06,
+            height: MediaQuery.of(context).size.height * 0.05,
             decoration: const BoxDecoration(
-              color: const Color(0xff1B6569),
+              color: Color(0xff1B6569),
               borderRadius: BorderRadius.only(
                 topRight: Radius.circular(15),
                 topLeft: Radius.circular(15),
@@ -51,7 +53,15 @@ class OneNews extends StatelessWidget {
                     ),
                   ),
                 ),
-                Text(userName, style: TextStyle(fontWeight: FontWeight.bold)),
+                TextButton(
+                  child: Text(userName,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.white)),
+                  onPressed: () {
+                    Provider.of<TwietterApiProvider>(context, listen: false)
+                        .launchURL(profileUrl);
+                  },
+                ),
                 Expanded(
                   child: Text(
                     " @" + screenName + "eeeeeeeeeeeeeeeeeerrrrrrrraaaaaaaaaa",

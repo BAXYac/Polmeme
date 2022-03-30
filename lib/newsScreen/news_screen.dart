@@ -22,6 +22,8 @@ class ListOfNews extends StatelessWidget {
             }
           },
           child: OneNews(
+              profileUrl:
+                  "https://twitter.com/${myProvider["user"]["screen_name"]}",
               currentIndex: myProvider,
               tweetUrl:
                   "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
