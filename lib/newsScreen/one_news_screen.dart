@@ -97,8 +97,8 @@ class _OneNewsState extends State<OneNews> {
                               //             "https://images.pexels.com/photos/1629781/pexels-photo-1629781.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
                               //         fit: BoxFit.cover)),
                               //
-                              height: MediaQuery.of(context).size.height * 0.2,
-                              width: 210,
+                              height: MediaQuery.of(context).size.height * 0.25,
+                              width: 270,
                               decoration: BoxDecoration(
                                   color: Colors.pink,
                                   image: DecorationImage(

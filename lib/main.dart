@@ -17,6 +17,7 @@ Future<void> main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+  await Firebase.initializeApp();
 
   return runApp(
     ChangeNotifierProvider(
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
             return MaterialApp(
               theme: themeProvider.getTheme,
               debugShowCheckedModeBanner: false,
-              home: Home(),
+              home: LoginHandler(),
             );
           },
         ),

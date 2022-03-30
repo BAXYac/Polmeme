@@ -17,32 +17,48 @@ class _ListOfNewsState extends State<ListOfNews> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          children: [
-            Expanded(
-              child:
-                  //  Text(
-                  //     Provider.of<TwietterApiProvider>(context).test.toString())
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        body: FutureBuilder(
+          future: Provider.of<TwietterApiProvider>(context, listen: false)
+              .getData(),
+          builder: (context, snapshot) {
+            switch (snapshot.connectionState) {
+              case ConnectionState.waiting:
+                return const Center(child: CircularProgressIndicator());
+              default:
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                } else {
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        Expanded(
+                          child:
+                              //  Text(
+                              //     Provider.of<TwietterApiProvider>(context).test.toString())
 
-                  // dlugosc listy < 1 ? Circular progress indicator:
+                              // dlugosc listy < 1 ? Circular progress indicator:
 
-                  ListView.builder(
-                itemBuilder: (context, index) {
-                  return myCard(index);
-                },
-                itemCount:
-                    Provider.of<TwietterApiProvider>(context, listen: false)
-                        .listOfTweets
-                        .length,
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
+                              ListView.builder(
+                            itemBuilder: (context, index) {
+                              return myCard(index);
+                            },
+                            itemCount: Provider.of<TwietterApiProvider>(context,
+                                    listen: false)
+                                .listOfTweets
+                                .length,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                }
+            }
+
+            // By default, show a loading spinner.
+          },
+        ));
   }
 
   Widget myCard(index) {
