@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:transparent_image/transparent_image.dart';
 
@@ -47,7 +46,7 @@ class OneNews extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8.0),
                   child: ClipOval(
                     child: FadeInImage.memoryNetwork(
-                      imageScale: 2,
+                      width: 25,
                       image: currentIndex["user"]["profile_image_url"],
                       placeholder: kTransparentImage,
                     ),
@@ -115,7 +114,7 @@ class OneNews extends StatelessWidget {
           ),
           Container(
             decoration: const BoxDecoration(
-              color: const Color(0xff1B6569),
+              color: Color(0xff1B6569),
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(15),
                 bottomLeft: Radius.circular(15),

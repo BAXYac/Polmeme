@@ -51,22 +51,6 @@ class TwietterApiProvider extends ChangeNotifier {
         'result_type': 'recent'
       }));
 
-      // Response response = await twitterApi!.client.get(Uri.https(
-      //     'api.twitter.com',
-      //     '1.1/statuses/home_timeline.json', <String, String>{
-      //   'count': '10',
-      //   'tweet_mode': 'extended',
-      //   'include_entities': 'true',
-      //   'exclude_replies': 'true'
-      // }));
-      var res = response.body;
-      // List<Map<String, dynamic>> data =
-      //     List<Map<String, dynamic>>.from(json.decode(response.body));
-
-      // data.forEach((tweet) => _listOfTweets.add(tweet));
-      // test = _listOfTweets[0];
-      // print(_listOfTweets);
-
       Map<String, dynamic> data =
           Map<String, dynamic>.from(json.decode(response.body));
       print(data["statuses"][0].keys);
