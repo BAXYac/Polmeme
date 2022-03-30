@@ -42,7 +42,7 @@ class TwietterApiProvider extends ChangeNotifier {
       Response response = await twitterApi!.client.get(Uri.https(
           'api.twitter.com', '1.1/search/tweets.json', <String, String>{
         'q':
-            "from:tvp_info OR from:tvn24 OR from:Piechocinski OR from:GrzegorzBraun_ OR from:AndrzejDuda",
+            "(from:tvp_info OR from:tvn24 OR from:Piechocinski OR from:GrzegorzBraun_ OR from:AndrzejDuda) -filter:retweets",
         'count': '10',
         'include_entities': 'true',
         'include_rts': 'false',

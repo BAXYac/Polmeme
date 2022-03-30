@@ -3,6 +3,8 @@ import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:linkwell/linkwell.dart';
+import 'package:transparent_image/transparent_image.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 
 class OneNews extends StatelessWidget {
   OneNews({
@@ -68,6 +70,9 @@ class OneNews extends StatelessWidget {
                         tweetTxt,
                         linkStyle: TextStyle(color: Colors.white),
                       ),
+                      SizedBox(
+                        height: 8,
+                      ),
                       //  currentIndex["extended_entities"] != null
                       //     ? Container(
                       //         decoration: BoxDecoration(
@@ -82,25 +87,13 @@ class OneNews extends StatelessWidget {
                       currentIndex["extended_entities"] == null
                           ? Container()
                           : Container(
-                              // height: MediaQuery.of(context).size.height * 0.15,
-                              // width: 210,
-                              // decoration: BoxDecoration(
-                              //     color: Colors.black,
-                              //     image: DecorationImage(
-                              //         image: NetworkImage(
-                              //             "https://images.pexels.com/photos/1629781/pexels-photo-1629781.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"),
-                              //         fit: BoxFit.cover)),
-                              //
+                              child: FadeInImage.memoryNetwork(
+                                image: currentIndex["extended_entities"]
+                                    ["media"][0]["media_url_https"],
+                                placeholder: kTransparentImage,
+                              ),
                               height: MediaQuery.of(context).size.height * 0.25,
-                              width: 270,
-                              decoration: BoxDecoration(
-                                  color: Colors.pink,
-                                  image: DecorationImage(
-                                      image: NetworkImage(
-                                          currentIndex["extended_entities"]
-                                              ["media"][0]["media_url_https"]),
-                                      fit: BoxFit.cover)),
-                            )
+                            ),
                     ],
                   ),
                 ),
