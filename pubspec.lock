@@ -212,6 +212,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.4.0"
+  linkify:
+    dependency: "direct main"
+    description:
+      name: linkify
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.1.0"
+  linkwell:
+    dependency: "direct main"
+    description:
+      name: linkwell
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.0.6"
   lints:
     dependency: transitive
     description:

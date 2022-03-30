@@ -71,8 +71,11 @@ class TwietterApiProvider extends ChangeNotifier {
           Map<String, dynamic>.from(json.decode(response.body));
       print(data["statuses"][0].keys);
       _listOfTweets = data["statuses"];
-      test = _listOfTweets[2]["full_text"];
-      print(test);
+      test = _listOfTweets[0]["full_text"]
+          .toString()
+          .replaceAll("https", ",:.https")
+          .split(",:.");
+      print(test[0]);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }

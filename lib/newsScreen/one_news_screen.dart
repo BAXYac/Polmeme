@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
-import 'package:dart_twitter_api/twitter_api.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:linkwell/linkwell.dart';
 
-class OneNews extends StatefulWidget {
+class OneNews extends StatelessWidget {
   OneNews({
     Key? key,
     required this.tweetTxt,
@@ -20,11 +19,6 @@ class OneNews extends StatefulWidget {
   final String tweetUrl;
   final dynamic currentIndex;
 
-  @override
-  State<OneNews> createState() => _OneNewsState();
-}
-
-class _OneNewsState extends State<OneNews> {
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -47,12 +41,12 @@ class _OneNewsState extends State<OneNews> {
                       child: SvgPicture.asset("assets/icons8-twitter (1).svg",
                           color: Colors.blue),
                     ),
-                    Text(widget.userName,
+                    Text(userName,
                         style: TextStyle(fontWeight: FontWeight.bold)),
                     Expanded(
                       child: Text(
                         " @" +
-                            widget.screenName +
+                            screenName +
                             "eeeeeeeeeeeeeeeeeerrrrrrrraaaaaaaaaa",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
@@ -64,28 +58,28 @@ class _OneNewsState extends State<OneNews> {
               InkWell(
                 onTap: () {
                   Provider.of<TwietterApiProvider>(context, listen: false)
-                      .launchURL(widget.tweetUrl);
+                      .launchURL(tweetUrl);
                 },
                 child: Container(
                   padding: EdgeInsets.all(8),
                   child: Column(
                     children: [
-                      Text(
-                        widget.tweetTxt,
-                        style: TextStyle(color: Colors.black, fontSize: 12),
+                      LinkWell(
+                        tweetTxt,
+                        linkStyle: TextStyle(color: Colors.white),
                       ),
-                      // widget.currentIndex["extended_entities"] != null
+                      //  currentIndex["extended_entities"] != null
                       //     ? Container(
                       //         decoration: BoxDecoration(
                       //             color: Colors.black,
                       //             image: DecorationImage(
                       //                 image: NetworkImage(
-                      //                     widget.currentIndex["entities"]
+                      //                      currentIndex["entities"]
                       //                         ["media"][0]["url"]),
                       //                 fit: BoxFit.cover)),
                       //       )
                       // :
-                      widget.currentIndex["extended_entities"] == null
+                      currentIndex["extended_entities"] == null
                           ? Container()
                           : Container(
                               // height: MediaQuery.of(context).size.height * 0.15,
@@ -102,9 +96,9 @@ class _OneNewsState extends State<OneNews> {
                               decoration: BoxDecoration(
                                   color: Colors.pink,
                                   image: DecorationImage(
-                                      image: NetworkImage(widget
-                                              .currentIndex["extended_entities"]
-                                          ["media"][0]["media_url_https"]),
+                                      image: NetworkImage(
+                                          currentIndex["extended_entities"]
+                                              ["media"][0]["media_url_https"]),
                                       fit: BoxFit.cover)),
                             )
                     ],
