@@ -42,7 +42,7 @@ dependencies:
   shared_preferences: ^2.0.13
   linkwell: ^2.0.6
   transparent_image: ^2.0.0
-  cached_network_image: ^3.2.0
+
 
 
 dev_dependencies:

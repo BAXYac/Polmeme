@@ -43,7 +43,7 @@ class TwietterApiProvider extends ChangeNotifier {
           'api.twitter.com', '1.1/search/tweets.json', <String, String>{
         'q':
             "(from:tvp_info OR from:tvn24 OR from:Piechocinski OR from:GrzegorzBraun_ OR from:AndrzejDuda) -filter:retweets",
-        'count': '10',
+        'count': '20',
         'include_entities': 'true',
         'include_rts': 'false',
         'lang': 'pl',
@@ -71,11 +71,8 @@ class TwietterApiProvider extends ChangeNotifier {
           Map<String, dynamic>.from(json.decode(response.body));
       print(data["statuses"][0].keys);
       _listOfTweets = data["statuses"];
-      test = _listOfTweets[0]["full_text"]
-          .toString()
-          .replaceAll("https", ",:.https")
-          .split(",:.");
-      print(test[0]);
+      test = _listOfTweets[0]["user"]["profile_background_image_url"];
+      print(test);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }
