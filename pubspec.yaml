@@ -40,6 +40,9 @@ dependencies:
   firebase_core: ^1.13.1 
   cloud_firestore: ^3.1.10
   shared_preferences: ^2.0.13
+  linkwell: ^2.0.6
+  transparent_image: ^2.0.0
+
 
 
 dev_dependencies:

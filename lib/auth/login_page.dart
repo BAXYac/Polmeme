@@ -8,7 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:polmeme/auth/auth_state.dart';
 import 'package:polmeme/auth/style.dart';
 import 'package:polmeme/home/home.dart';
-import 'package:polmeme/newsScreen/news_screen.dart';
 import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {

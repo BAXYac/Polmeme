@@ -21,10 +21,11 @@ class _HomeState extends State<Home> {
   @override
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isMeme = false;
-
+  @override
   @override
   PageController _controller = PageController();
   Widget build(BuildContext context) {
+    Provider.of<TwietterApiProvider>(context, listen: false).getData();
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
