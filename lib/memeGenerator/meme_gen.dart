@@ -19,11 +19,13 @@ class MemeGenerator extends StatefulWidget {
 class _MemeGeneratorState extends State<MemeGenerator> {
   final GlobalKey globalKey = new GlobalKey();
   XFile? _image;
-  late XFile _imageFile;
+  late File _imageFile;
   late String headerText = '';
   late String footerText = '';
   var rng = new Random();
   bool imageSelected = false;
+  Offset offset = Offset(0, -50);
+  Offset offsetBottom = Offset(0, 100);
 
   Future getImage() async {
     XFile? image;
@@ -38,58 +40,119 @@ class _MemeGeneratorState extends State<MemeGenerator> {
       } else {}
       _image = image;
     });
-    new Directory('storage/emulated/0/' + 'MemeGenerator')
-        .create(recursive: true);
+    //  Directory('storage/emulated/0/' + 'MemeGenerator')
+    //     .create(recursive: true);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: ListView(
-          shrinkWrap: true,
+        child: Column(
           children: [
-            Image.asset('assets/img/image1.jpg'),
-            SizedBox(
-              height: 12,
-            ),
-            Image.asset('assets/img/image2.jpg'),
             RepaintBoundary(
               key: globalKey,
-              child: Stack(
-                children: [
-                  _image != null
-                      ? Image.file(
-                          File(_image!.path),
-                          height: 300,
-                          fit: BoxFit.fitHeight,
-                        )
-                      : Container(),
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    height: 300,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          headerText.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 26),
-                        ),
-                        Spacer(),
-                        Text(
-                          footerText.toUpperCase(),
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w300,
-                              fontSize: 26),
-                        ),
-                      ],
+              child: Container(
+                width: MediaQuery.of(context).size.width,
+                height: 300,
+                child: Stack(
+                  children: [
+                    _image != null
+                        ? Image.file(
+                            File(_image!.path),
+                            height: 300,
+                            fit: BoxFit.fitHeight,
+                          )
+                        : Container(),
+                    Container(
+                      child: Positioned(
+                        left: offset.dx,
+                        top: offset.dy,
+                        child: GestureDetector(
+                            onPanUpdate: (details) {
+                              setState(() {
+                                offset = Offset(offset.dx + details.delta.dx,
+                                    offset.dy + details.delta.dy);
+                              });
+                            },
+                            child: SizedBox(
+                              width: 300,
+                              height: 300,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Text(
+                                    headerText.toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 26,
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                          offset: Offset(2.0, 2.0),
+                                          blurRadius: 3.0,
+                                          color: Colors.black87,
+                                        ),
+                                        Shadow(
+                                          offset: Offset(2.0, 2.0),
+                                          blurRadius: 8.0,
+                                          color: Colors.black87,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )),
+                      ),
                     ),
-                  ),
-                ],
+                    Container(
+                      child: Positioned(
+                        left: offsetBottom.dx,
+                        top: offsetBottom.dy,
+                        child: GestureDetector(
+                            onPanUpdate: (details) {
+                              setState(() {
+                                offsetBottom = Offset(
+                                    offsetBottom.dx + details.delta.dx,
+                                    offsetBottom.dy + details.delta.dy);
+                              });
+                            },
+                            child: SizedBox(
+                              width: 300,
+                              height: 300,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Center(
+                                  child: Text(
+                                    footerText.toUpperCase(),
+                                    textAlign: TextAlign.center,
+                                    style: const TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w300,
+                                      fontSize: 26,
+                                      shadows: <Shadow>[
+                                        Shadow(
+                                          offset: Offset(2.0, 2.0),
+                                          blurRadius: 3.0,
+                                          color: Colors.black87,
+                                        ),
+                                        Shadow(
+                                          offset: Offset(2.0, 2.0),
+                                          blurRadius: 8.0,
+                                          color: Colors.black87,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            )),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -127,7 +190,6 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                 : Container(
                     child: Text('Wybierz obraz'),
                   ),
-            // _imageFile != null ? Image.file(File(_image!.path)) : Container(),
           ],
         ),
       ),
@@ -149,16 +211,15 @@ class _MemeGeneratorState extends State<MemeGenerator> {
     Uint8List? pngBytes = byteData?.buffer.asUint8List();
     print(pngBytes);
     File imgFile = File('$directory/screenshot${rng.nextInt(200)}.png');
+    imgFile.writeAsBytes(pngBytes!);
     setState(() {
-      _imageFile = imgFile as XFile;
+      _imageFile = imgFile;
     });
     _savefile(_imageFile);
     //saveFileLocal();
-
-    imgFile.writeAsBytes(pngBytes!);
   }
 
-  _savefile(XFile file) async {
+  _savefile(File file) async {
     // await _askPermission();
     final result = await ImageGallerySaver.saveImage(
         Uint8List.fromList(await file.readAsBytes()));
