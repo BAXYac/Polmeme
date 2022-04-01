@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/memeGenerator/meme_gen.dart';
 import 'package:polmeme/memeGenerator/meme_generator.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
@@ -124,7 +125,7 @@ class _OneNewsState extends State<OneNews> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const MemeGen()),
+                                builder: (context) => MemeGenerator()),
                           );
                         },
                         child: const Text(

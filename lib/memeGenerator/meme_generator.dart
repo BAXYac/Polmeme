@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:polmeme/provider/meme_gen_provider.dart';
 import 'package:provider/provider.dart';
@@ -10,6 +12,12 @@ class MemeGen extends StatefulWidget {
 }
 
 class _MemeGenState extends State<MemeGen> {
+  late File _image;
+  late File _imageFile;
+  String _tekst = '';
+
+  var top = 100.0;
+  var left = 100.0;
   int index = 0;
   @override
   Widget build(BuildContext context) {
@@ -45,26 +53,38 @@ class _MemeGenState extends State<MemeGen> {
               },
               child: const Padding(
                 padding: EdgeInsets.all(8.0),
-                child: Text('+dadaj tekst'),
+                child: Text('+dodaj tekst'),
               ),
               style: ElevatedButton.styleFrom(primary: Color(0xff1B6569)),
-            )
+            ),
+            ElevatedButton(
+              onPressed: () {
+                // takeScreenshot();
+              },
+              child: Text('Zapisz'),
+            ),
           ],
         )));
   }
 
-  Widget item(context, index) {
-    return Container(
-      width: 250,
-      height: 250,
-      child: InkWell(
-          onTap: () {
-            Provider.of<MemeGenProvider>(context, listen: false).indexOfTemp =
-                index;
-          },
-          child: FlutterLogo()),
-    );
-  }
+  // Widget item(context, index) {
+  //   return Container(
+  //     width: 250,
+  //     height: 250,
+  //     child: Column(
+  //       children: [
+  //         InkWell(
+  //           onTap: () {
+  //             Provider.of<MemeGenProvider>(context, listen: false).indexOfTemp =
+  //                 index;
+  //           },
+  //           // child: _image != null ? Image.file(_image) : FlutterLogo()),
+  //           child: FlutterLogo(),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   List<Widget> _listOfText = [];
 
@@ -74,6 +94,11 @@ class _MemeGenState extends State<MemeGen> {
       child: Container(
         color: Colors.white,
         child: TextFormField(
+          onChanged: (val) {
+            setState(() {
+              _tekst = val;
+            });
+          },
           style: TextStyle(color: Colors.black),
           decoration: InputDecoration(
               prefixIcon: Icon(
@@ -92,6 +117,68 @@ class _MemeGenState extends State<MemeGen> {
                 },
               )),
         ),
+      ),
+    );
+  }
+
+  Widget item(context, index) {
+    return Container(
+      width: 250,
+      height: 250,
+      child: Column(
+        children: [
+          GestureDetector(
+            child: Stack(
+              children: [
+                Positioned(
+                  child: Container(
+                    color: Colors.yellow,
+                    height: 20,
+                    width: 20,
+                  ),
+
+                  // child: Text(
+                  //   _tekst,
+                  //   style: TextStyle(color: Colors.yellow),
+                  // ),
+                  left: left,
+                  top: top,
+                ),
+                InkWell(
+                  onTap: () {
+                    Provider.of<MemeGenProvider>(context, listen: false)
+                        .indexOfTemp = index;
+                  },
+                  // child: _image != null ? Image.file(_image) : FlutterLogo()),
+                  child: FlutterLogo(),
+                ),
+              ],
+            ),
+          ),
+          // Draggable(
+          //   feedback: Text(' '),
+          //   child: Text(
+          //     _tekst,
+          //     style: TextStyle(color: Colors.yellow),
+          //   ),
+          //   childWhenDragging: Text(
+          //     _tekst,
+          //     style: TextStyle(color: Colors.yellow),
+          //   ),
+          // ),
+          // DragTarget(
+          //   builder: (
+          //     BuildContext context,
+          //     List<dynamic> accepted,
+          //     List<dynamic> rejected,
+          //   ) {
+          //     return Text(
+          //       '',
+          //       style: TextStyle(color: Colors.yellow),
+          //     );
+          //   },
+          // ),
+        ],
       ),
     );
   }
