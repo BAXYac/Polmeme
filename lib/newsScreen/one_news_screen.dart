@@ -63,7 +63,7 @@ class OneNews extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    " @" + screenName + "eeeeeeeeeeeeeeeeeerrrrrrrraaaaaaaaaa",
+                    " @$screenName",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
