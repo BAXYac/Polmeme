@@ -43,7 +43,7 @@ class TwietterApiProvider extends ChangeNotifier {
           'api.twitter.com', '1.1/search/tweets.json', <String, String>{
         'q':
             "(from:NewsweekPolska OR from:CzarnekP OR from:szymon_holownia OR from:JkmMikke OR from:AM_Zukowska OR from:tvp_info OR from:tvn24 OR from:Piechocinski OR from:GrzegorzBraun_ OR from:AndrzejDuda OR from:SylwiaSpurek OR from:MorawieckiM) -filter:retweets",
-        'count': '20',
+        'count': '40',
         'include_entities': 'true',
         'include_rts': 'false',
         'lang': 'pl',

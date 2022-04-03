@@ -63,7 +63,7 @@ class OneNews extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    " @$screenName",
+                    "@$screenName",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -81,9 +81,12 @@ class OneNews extends StatelessWidget {
               child: Column(
                 children: [
                   LinkWell(
-                    tweetTxt,
+                    tweetTxt
+                        .replaceAll("https:/", "\n")
+                        .replaceAll("&gt;&gt;&gt;", ""),
                     linkStyle: TextStyle(color: Colors.white),
                   ),
+
                   const SizedBox(
                     height: 8,
                   ),
