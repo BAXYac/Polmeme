@@ -60,11 +60,11 @@ class _HomeState extends State<Home> {
                         Provider.of<ThemeProvider>(context, listen: false);
                     themeProvider.swapTheme();
                   },
-                  icon: Icon(Icons.brightness_6)),
+                  icon: const Icon(Icons.brightness_6)),
             ),
             if (loggedIn)
               ListTile(
-                title: Text('Zmiana hasła'),
+                title: const Text('Zmiana hasła'),
                 onTap: () {},
               ),
             ListTile(

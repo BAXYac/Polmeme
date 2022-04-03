@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import '../auth/auth_state.dart';
 
 class OneNews extends StatelessWidget {
   OneNews({
@@ -23,6 +26,8 @@ class OneNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool loggedIn =
+        Provider.of<AuthState>(context, listen: false).auth.currentUser != null;
     return Card(
       margin: EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
@@ -134,10 +139,47 @@ class OneNews extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     )),
                 TextButton(
-                    onPressed: () {},
-                    child: const Text(
+                    onPressed: loggedIn
+                        ? () {}
+                        : () {
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      backgroundColor: const Color(0xff1B6569),
+                                      title: const Text(
+                                          'Tylko dla zalogowanych użytkowników'),
+                                      content: const Text(
+                                          'Zaloguj się, aby stworzyć mema'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                              primary: Colors.white),
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text(
+                                              'Jednak wolę przeglądać'),
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                              primary: Colors.white),
+                                          onPressed: () {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage(),
+                                              ),
+                                            );
+                                          },
+                                          child: const Text('Zaloguj się'),
+                                        ),
+                                      ],
+                                    ));
+                          },
+                    child: Text(
                       "Stwórz meme",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: loggedIn ? Colors.white : Colors.grey),
                     ))
               ],
             ),
