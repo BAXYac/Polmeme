@@ -5,7 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import '../auth/auth_state.dart';
+import '../../auth/auth_state.dart';
 
 class OneNews extends StatelessWidget {
   OneNews({
