@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/memeGenerator/memeUI.dart';
 import 'package:polmeme/memeGenerator/meme_gen.dart';
-import 'package:polmeme/memeGenerator/meme_generator.dart';
+
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:dart_twitter_api/twitter_api.dart';
@@ -15,12 +16,14 @@ class OneNews extends StatefulWidget {
     required this.screenName,
     required this.tweetUrl,
     required this.currentIndex,
+    required this.isMeme,
   }) : super(key: key);
   final String tweetTxt;
   final String userName;
   final String screenName;
   final String tweetUrl;
   final dynamic currentIndex;
+  final bool isMeme;
 
   @override
   State<OneNews> createState() => _OneNewsState();
@@ -111,29 +114,37 @@ class _OneNewsState extends State<OneNews> {
                   ),
                 ),
                 height: MediaQuery.of(context).size.height * 0.05,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          "Pokaż meme",
-                          style: TextStyle(color: Colors.white),
-                        )),
-                    TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => MemeGenerator()),
-                          );
-                        },
-                        child: const Text(
-                          "Stwórz meme",
-                          style: TextStyle(color: Colors.white),
-                        ))
-                  ],
-                ),
+                child: widget.isMeme
+                    ? Container()
+                    : Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          TextButton(
+                              onPressed: () {},
+                              child: const Text(
+                                "Pokaż meme",
+                                style: TextStyle(color: Colors.white),
+                              )),
+                          TextButton(
+                              onPressed: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => MemeUI(
+                                            currentIndex: widget.currentIndex,
+                                            screenName: widget.screenName,
+                                            tweetTxt: widget.tweetTxt,
+                                            tweetUrl: widget.tweetUrl,
+                                            userName: widget.userName,
+                                          )),
+                                );
+                              },
+                              child: const Text(
+                                "Stwórz meme",
+                                style: TextStyle(color: Colors.white),
+                              ))
+                        ],
+                      ),
               )
             ],
           ),

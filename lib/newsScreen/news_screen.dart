@@ -76,21 +76,24 @@ class _ListOfNewsState extends State<ListOfNews> {
     var myProvider = Provider.of<TwietterApiProvider>(context, listen: false)
         .listOfTweets[index];
     return Dismissible(
-        key: UniqueKey(),
-        onDismissed: (kierunkowy) {
-          if (kierunkowy == DismissDirection.startToEnd ||
-              kierunkowy == DismissDirection.endToStart) {
-            Provider.of<TwietterApiProvider>(context, listen: false)
-                .listOfTweets
-                .removeAt(index);
-          }
-        },
-        child: OneNews(
-            currentIndex: myProvider,
-            tweetUrl:
-                "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
-            screenName: myProvider["user"]["screen_name"],
-            userName: myProvider["user"]["name"],
-            tweetTxt: myProvider["full_text"]));
+      key: UniqueKey(),
+      onDismissed: (kierunkowy) {
+        if (kierunkowy == DismissDirection.startToEnd ||
+            kierunkowy == DismissDirection.endToStart) {
+          Provider.of<TwietterApiProvider>(context, listen: false)
+              .listOfTweets
+              .removeAt(index);
+        }
+      },
+      child: OneNews(
+        currentIndex: myProvider,
+        tweetUrl:
+            "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
+        screenName: myProvider["user"]["screen_name"],
+        userName: myProvider["user"]["name"],
+        tweetTxt: myProvider["full_text"],
+        isMeme: false,
+      ),
+    );
   }
 }

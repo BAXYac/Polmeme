@@ -5,19 +5,17 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
-import 'package:image_picker/image_picker.dart';
-
 import 'package:path_provider/path_provider.dart';
 
-class MemeGenerator extends StatefulWidget {
-  final XFile? image;
-  MemeGenerator({Key? key, this.image}) : super(key: key);
+class Meme2 extends StatefulWidget {
+  final Image? image2;
+  Meme2({Key? key, this.image2}) : super(key: key);
 
   @override
-  State<MemeGenerator> createState() => _MemeGeneratorState();
+  State<Meme2> createState() => _Meme2State();
 }
 
-class _MemeGeneratorState extends State<MemeGenerator> {
+class _Meme2State extends State<Meme2> {
   final GlobalKey globalKey = new GlobalKey();
   late File _imageFile;
   late String headerText = '';
@@ -43,13 +41,7 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                 height: 300,
                 child: Stack(
                   children: [
-                    widget.image != null
-                        ? Image.file(
-                            File(widget.image!.path),
-                            height: 300,
-                            fit: BoxFit.fitHeight,
-                          )
-                        : Container(),
+                    widget.image2!,
                     Container(
                       child: Positioned(
                         left: offset.dx,
@@ -183,9 +175,10 @@ class _MemeGeneratorState extends State<MemeGenerator> {
   takeScreenshot() async {
     RenderRepaintBoundary? boundary =
         globalKey.currentContext!.findRenderObject() as RenderRepaintBoundary;
-    ui.Image image = await boundary.toImage();
+    ui.Image image2 = await boundary.toImage();
     final directory = (await getApplicationDocumentsDirectory()).path;
-    ByteData? byteData = await image.toByteData(format: ui.ImageByteFormat.png);
+    ByteData? byteData =
+        await image2.toByteData(format: ui.ImageByteFormat.png);
     Uint8List? pngBytes = byteData?.buffer.asUint8List();
     print(pngBytes);
     File imgFile = File('$directory/screenshot${rng.nextInt(200)}.png');
