@@ -29,11 +29,11 @@ class OneNews extends StatelessWidget {
     bool loggedIn =
         Provider.of<AuthState>(context, listen: false).auth.currentUser != null;
     return Card(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      color: Color.fromARGB(255, 142, 179, 166),
+      color: const Color.fromARGB(255, 142, 179, 166),
       child: Column(
         children: [
           Container(
@@ -48,7 +48,7 @@ class OneNews extends StatelessWidget {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ClipOval(
                     child: FadeInImage.memoryNetwork(
                       width: 25,
@@ -59,7 +59,7 @@ class OneNews extends StatelessWidget {
                 ),
                 TextButton(
                   child: Text(userName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   onPressed: () {
                     Provider.of<TwietterApiProvider>(context, listen: false)
@@ -82,14 +82,14 @@ class OneNews extends StatelessWidget {
                   .launchURL(tweetUrl);
             },
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   LinkWell(
                     tweetTxt
                         .replaceAll("https:/", "\n")
                         .replaceAll("&gt;&gt;&gt;", ""),
-                    linkStyle: TextStyle(color: Colors.white),
+                    linkStyle: const TextStyle(color: Colors.white),
                   ),
 
                   const SizedBox(
@@ -143,6 +143,7 @@ class OneNews extends StatelessWidget {
                         ? () {}
                         : () {
                             showDialog(
+                                barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) => AlertDialog(
                                       backgroundColor: const Color(0xff1B6569),

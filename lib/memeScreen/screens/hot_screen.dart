@@ -35,6 +35,7 @@ class HotMeme extends StatelessWidget {
                           ? () {}
                           : () {
                               showDialog(
+                                  barrierDismissible: false,
                                   context: context,
                                   builder: (BuildContext context) =>
                                       AlertDialog(

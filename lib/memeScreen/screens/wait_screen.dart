@@ -34,6 +34,7 @@ class WaitMemes extends StatelessWidget {
                           ? () {}
                           : () {
                               showDialog(
+                                  barrierDismissible: false,
                                   context: context,
                                   builder: (BuildContext context) =>
                                       AlertDialog(
@@ -88,7 +89,7 @@ class WaitMemes extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.green,
-            textStyle: TextStyle(fontSize: 25),
+            textStyle: const TextStyle(fontSize: 25),
           ),
           onPressed: isLoggedIn,
           child: const Text(
@@ -101,7 +102,7 @@ class WaitMemes extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.red,
-            textStyle: TextStyle(fontSize: 25),
+            textStyle: const TextStyle(fontSize: 25),
           ),
           onPressed: isLoggedIn,
           child: const Text(
@@ -115,7 +116,7 @@ class WaitMemes extends StatelessWidget {
       ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.blue,
-          textStyle: TextStyle(fontSize: 20),
+          textStyle: const TextStyle(fontSize: 20),
         ),
         onPressed: isLoggedIn,
         child: const Text(
