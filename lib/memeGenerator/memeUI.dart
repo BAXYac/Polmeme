@@ -133,6 +133,7 @@ class _MemeUIState extends State<MemeUI> {
               tweetUrl: widget.tweetUrl,
               userName: widget.userName,
               isMeme: true,
+              profileUrl: '',
             ),
           ),
         ],
