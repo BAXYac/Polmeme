@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../auth/auth_state.dart';
+import '../../auth/login_page.dart';
 
 class WaitMemes extends StatelessWidget {
   WaitMemes({Key? key}) : super(key: key);
@@ -10,6 +14,8 @@ class WaitMemes extends StatelessWidget {
   ];
   @override
   Widget build(BuildContext context) {
+    bool loggedIn =
+        Provider.of<AuthState>(context, listen: false).auth.currentUser != null;
     return Scaffold(
       body: Column(
         children: [
@@ -23,7 +29,48 @@ class WaitMemes extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Image.asset(wait[index]),
                     ),
-                    myButtony(),
+                    myButtony(
+                      loggedIn
+                          ? () {}
+                          : () {
+                              showDialog(
+                                  barrierDismissible: false,
+                                  context: context,
+                                  builder: (BuildContext context) =>
+                                      AlertDialog(
+                                        backgroundColor:
+                                            const Color(0xff1B6569),
+                                        title: const Text(
+                                            'Tylko dla zalogowanych użytkowników'),
+                                        content: const Text(
+                                            'Zaloguj się, aby stworzyć mema'),
+                                        actions: <Widget>[
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                                primary: Colors.white),
+                                            onPressed: () => Navigator.pop(
+                                                context, 'Cancel'),
+                                            child: const Text(
+                                                'Jednak wolę przeglądać'),
+                                          ),
+                                          TextButton(
+                                            style: TextButton.styleFrom(
+                                                primary: Colors.white),
+                                            onPressed: () {
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      LoginPage(),
+                                                ),
+                                              );
+                                            },
+                                            child: const Text('Zaloguj się'),
+                                          ),
+                                        ],
+                                      ));
+                            },
+                    ),
                   ],
                 );
               },
@@ -35,16 +82,16 @@ class WaitMemes extends StatelessWidget {
     );
   }
 
-  myButtony() {
+  myButtony(isLoggedIn) {
     return Row(children: [
       Padding(
         padding: const EdgeInsets.only(left: 8.0, right: 8.0),
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.green,
-            textStyle: TextStyle(fontSize: 25),
+            textStyle: const TextStyle(fontSize: 25),
           ),
-          onPressed: () {},
+          onPressed: isLoggedIn,
           child: const Text(
             "+",
           ),
@@ -55,9 +102,9 @@ class WaitMemes extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             primary: Colors.red,
-            textStyle: TextStyle(fontSize: 25),
+            textStyle: const TextStyle(fontSize: 25),
           ),
-          onPressed: () {},
+          onPressed: isLoggedIn,
           child: const Text(
             "-",
           ),
@@ -69,9 +116,9 @@ class WaitMemes extends StatelessWidget {
       ElevatedButton(
         style: ElevatedButton.styleFrom(
           primary: Colors.blue,
-          textStyle: TextStyle(fontSize: 20),
+          textStyle: const TextStyle(fontSize: 20),
         ),
-        onPressed: () {},
+        onPressed: isLoggedIn,
         child: const Text(
           "Comment",
         ),

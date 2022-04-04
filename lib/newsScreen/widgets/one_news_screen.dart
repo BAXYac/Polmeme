@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import '../../auth/auth_state.dart';
 
 class OneNews extends StatelessWidget {
   OneNews({
@@ -23,12 +26,14 @@ class OneNews extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool loggedIn =
+        Provider.of<AuthState>(context, listen: false).auth.currentUser != null;
     return Card(
-      margin: EdgeInsets.all(8),
+      margin: const EdgeInsets.all(8),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
       ),
-      color: Color.fromARGB(255, 142, 179, 166),
+      color: const Color.fromARGB(255, 142, 179, 166),
       child: Column(
         children: [
           Container(
@@ -43,7 +48,7 @@ class OneNews extends StatelessWidget {
             child: Row(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8.0),
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: ClipOval(
                     child: FadeInImage.memoryNetwork(
                       width: 25,
@@ -54,7 +59,7 @@ class OneNews extends StatelessWidget {
                 ),
                 TextButton(
                   child: Text(userName,
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.white)),
                   onPressed: () {
                     Provider.of<TwietterApiProvider>(context, listen: false)
@@ -63,7 +68,7 @@ class OneNews extends StatelessWidget {
                 ),
                 Expanded(
                   child: Text(
-                    " @$screenName",
+                    "@$screenName",
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                   ),
@@ -77,13 +82,16 @@ class OneNews extends StatelessWidget {
                   .launchURL(tweetUrl);
             },
             child: Container(
-              padding: EdgeInsets.all(8),
+              padding: const EdgeInsets.all(8),
               child: Column(
                 children: [
                   LinkWell(
-                    tweetTxt,
-                    linkStyle: TextStyle(color: Colors.white),
+                    tweetTxt
+                        .replaceAll("https:/", "\n")
+                        .replaceAll("&gt;&gt;&gt;", ""),
+                    linkStyle: const TextStyle(color: Colors.white),
                   ),
+
                   const SizedBox(
                     height: 8,
                   ),
@@ -131,10 +139,48 @@ class OneNews extends StatelessWidget {
                       style: TextStyle(color: Colors.white),
                     )),
                 TextButton(
-                    onPressed: () {},
-                    child: const Text(
+                    onPressed: loggedIn
+                        ? () {}
+                        : () {
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) => AlertDialog(
+                                      backgroundColor: const Color(0xff1B6569),
+                                      title: const Text(
+                                          'Tylko dla zalogowanych użytkowników'),
+                                      content: const Text(
+                                          'Zaloguj się, aby stworzyć mema'),
+                                      actions: <Widget>[
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                              primary: Colors.white),
+                                          onPressed: () =>
+                                              Navigator.pop(context, 'Cancel'),
+                                          child: const Text(
+                                              'Jednak wolę przeglądać'),
+                                        ),
+                                        TextButton(
+                                          style: TextButton.styleFrom(
+                                              primary: Colors.white),
+                                          onPressed: () {
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    LoginPage(),
+                                              ),
+                                            );
+                                          },
+                                          child: const Text('Zaloguj się'),
+                                        ),
+                                      ],
+                                    ));
+                          },
+                    child: Text(
                       "Stwórz meme",
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(
+                          color: loggedIn ? Colors.white : Colors.grey),
                     ))
               ],
             ),

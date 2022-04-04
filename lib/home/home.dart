@@ -1,4 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:polmeme/auth/auth_state.dart';
 
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/memeScreen/meme_screen.dart';
@@ -26,6 +28,8 @@ class _HomeState extends State<Home> {
   PageController _controller = PageController();
   Widget build(BuildContext context) {
     Provider.of<TwietterApiProvider>(context, listen: false).getData();
+    bool loggedIn =
+        Provider.of<AuthState>(context, listen: false).auth.currentUser != null;
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
@@ -35,31 +39,37 @@ class _HomeState extends State<Home> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            const ListTile(
-              title: Text('Username'),
-              leading: Icon(Icons.person),
-            ),
-            const ListTile(
-              title: Text('Twoje meme'),
-            ),
-            const ListTile(
-              title: Text('Ustawienia'),
-            ),
+            if (loggedIn)
+              const ListTile(
+                title: Text('Username'),
+                leading: Icon(Icons.person),
+              ),
+            if (loggedIn)
+              const ListTile(
+                title: Text('Twoje meme'),
+              ),
+            if (loggedIn)
+              const ListTile(
+                title: Text('Ustawienia'),
+              ),
             ListTile(
-              title: Text('Ciemny motyw?'),
+              title: const Text('Ciemny motyw?'),
               trailing: IconButton(
                   onPressed: () {
                     ThemeProvider themeProvider =
                         Provider.of<ThemeProvider>(context, listen: false);
                     themeProvider.swapTheme();
                   },
-                  icon: Icon(Icons.brightness_6)),
+                  icon: const Icon(Icons.brightness_6)),
             ),
-            const ListTile(
-              title: Text('Zmiana hasła'),
-            ),
+            if (loggedIn)
+              ListTile(
+                title: const Text('Zmiana hasła'),
+                onTap: () {},
+              ),
             ListTile(
-              title: const Text('Wyloguj'),
+              title:
+                  loggedIn ? const Text('Wyloguj') : const Text('Zaloguj się'),
               onTap: () {
                 Navigator.pushReplacement(
                   context,
