@@ -147,7 +147,7 @@ class OneNews extends StatelessWidget {
                                 barrierDismissible: false,
                                 context: context,
                                 builder: (BuildContext context) =>
-                                    MyAlertDialog());
+                                    const MyAlertDialog());
                           },
                     child: Text(
                       "Stwórz meme",
