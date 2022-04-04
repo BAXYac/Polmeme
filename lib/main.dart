@@ -4,11 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:polmeme/auth/auth_state.dart';
 import 'package:polmeme/auth/login_page.dart';
-
-import 'package:polmeme/provider/meme_gen_provider.dart';
-
 import 'package:polmeme/home/home.dart';
-
 import 'package:polmeme/provider/theme_provider.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
@@ -37,7 +33,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) => MultiProvider(
         providers: [
           ChangeNotifierProvider(create: (context) => TwietterApiProvider()),
-          ChangeNotifierProvider(create: (context) => MemeGenProvider()),
           ChangeNotifierProvider(
             create: (context) => AuthState(FirebaseAuth.instance),
           ),

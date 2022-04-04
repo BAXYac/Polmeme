@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:polmeme/memeGenerator/meme_gen.dart';
 import 'package:polmeme/memeGenerator/meme_gen2.dart';
-import 'package:polmeme/newsScreen/one_news_screen.dart';
+import 'package:polmeme/newsScreen/widgets/one_news_screen.dart';
+
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 

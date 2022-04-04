@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:polmeme/newsScreen/one_news_screen.dart';
+import 'package:polmeme/newsScreen/widgets/one_news_screen.dart';
 import 'package:provider/provider.dart';
 import '../provider/twitter_api_provider.dart';
 
