@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:polmeme/newsScreen/widgets/myAlertDialog.dart';
+import 'package:polmeme/newsScreen/widgets/my_alert_dialog.dart';
 import 'package:provider/provider.dart';
-
 import '../../auth/auth_state.dart';
-import '../../auth/login_page.dart';
 
 class WaitMemes extends StatelessWidget {
   WaitMemes({Key? key}) : super(key: key);

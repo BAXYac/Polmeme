@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:polmeme/auth/login_page.dart';
-import 'package:polmeme/newsScreen/widgets/myAlertDialog.dart';
+import 'package:polmeme/newsScreen/widgets/my_alert_dialog.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:linkwell/linkwell.dart';
