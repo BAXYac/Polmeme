@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:polmeme/auth/login_page.dart';
+import 'package:polmeme/newsScreen/widgets/myAlertDialog.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:linkwell/linkwell.dart';
@@ -145,37 +146,8 @@ class OneNews extends StatelessWidget {
                             showDialog(
                                 barrierDismissible: false,
                                 context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      backgroundColor: const Color(0xff1B6569),
-                                      title: const Text(
-                                          'Tylko dla zalogowanych użytkowników'),
-                                      content: const Text(
-                                          'Zaloguj się, aby stworzyć mema'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                              primary: Colors.white),
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text(
-                                              'Jednak wolę przeglądać'),
-                                        ),
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                              primary: Colors.white),
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage(),
-                                              ),
-                                            );
-                                          },
-                                          child: const Text('Zaloguj się'),
-                                        ),
-                                      ],
-                                    ));
+                                builder: (BuildContext context) =>
+                                    MyAlertDialog());
                           },
                     child: Text(
                       "Stwórz meme",
