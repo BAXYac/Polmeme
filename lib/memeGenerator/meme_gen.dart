@@ -8,10 +8,30 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'package:path_provider/path_provider.dart';
+import 'package:polmeme/newsScreen/news_screen.dart';
+import 'package:polmeme/newsScreen/widgets/one_news_screen.dart';
 
 class MemeGenerator extends StatefulWidget {
   final XFile? image;
-  MemeGenerator({Key? key, this.image}) : super(key: key);
+
+  final currentIndex;
+  final screenName;
+  final tweetTxt;
+  final tweetUrl;
+  final userName;
+  final String profileUrl;
+  final image2;
+  MemeGenerator(
+      {Key? key,
+      this.image,
+      required this.currentIndex,
+      required this.screenName,
+      required this.tweetTxt,
+      required this.tweetUrl,
+      required this.userName,
+      required this.profileUrl,
+      this.image2})
+      : super(key: key);
 
   @override
   State<MemeGenerator> createState() => _MemeGeneratorState();
@@ -24,6 +44,8 @@ class _MemeGeneratorState extends State<MemeGenerator> {
   late String footerText = '';
   var rng = new Random();
   bool imageSelected = false;
+  bool isNew = true;
+  bool backColor = false;
   Offset offset = Offset(0, -50);
   Offset offsetBottom = Offset(0, 100);
 
@@ -34,13 +56,13 @@ class _MemeGeneratorState extends State<MemeGenerator> {
         child: Column(
           children: [
             SizedBox(
-              height: 30,
+              height: 50,
             ),
             RepaintBoundary(
               key: globalKey,
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                height: 300,
+                height: MediaQuery.of(context).size.height * 0.3,
                 child: Stack(
                   children: [
                     widget.image != null
@@ -49,7 +71,7 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                             height: 300,
                             fit: BoxFit.fitHeight,
                           )
-                        : Container(),
+                        : widget.image2,
                     Container(
                       child: Positioned(
                         left: offset.dx,
@@ -70,11 +92,14 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                                   child: Text(
                                     headerText.toUpperCase(),
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(
+                                    style: TextStyle(
+                                      backgroundColor: backColor == true
+                                          ? Colors.black
+                                          : Colors.transparent,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w300,
                                       fontSize: 26,
-                                      shadows: <Shadow>[
+                                      shadows: const <Shadow>[
                                         Shadow(
                                           offset: Offset(2.0, 2.0),
                                           blurRadius: 3.0,
@@ -114,11 +139,14 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                                   child: Text(
                                     footerText.toUpperCase(),
                                     textAlign: TextAlign.center,
-                                    style: const TextStyle(
+                                    style: TextStyle(
+                                      backgroundColor: backColor == true
+                                          ? Colors.black
+                                          : Colors.transparent,
                                       color: Colors.white,
                                       fontWeight: FontWeight.w300,
                                       fontSize: 26,
-                                      shadows: <Shadow>[
+                                      shadows: const <Shadow>[
                                         Shadow(
                                           offset: Offset(2.0, 2.0),
                                           blurRadius: 3.0,
@@ -141,11 +169,18 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                 ),
               ),
             ),
-            SizedBox(
-              height: 20,
-            ),
             Column(
               children: [
+                Row(children: [
+                  Checkbox(
+                      value: backColor,
+                      onChanged: (value) {
+                        setState(() {
+                          backColor = value!;
+                        });
+                      }),
+                  Text('Tło tekstu'),
+                ]),
                 TextField(
                   onChanged: (value) {
                     setState(() {
@@ -165,13 +200,33 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                   },
                   decoration: InputDecoration(hintText: 'Footer Text'),
                 ),
-                ElevatedButton(
-                    onPressed: () {
-                      takeScreenshot();
-                    },
-                    child: Text('Zapisz w telefonie')),
-                ElevatedButton(
-                    onPressed: () {}, child: Text('Zapisz w poczekalni'))
+                OneNews(
+                  currentIndex: widget.currentIndex,
+                  screenName: widget.screenName,
+                  tweetTxt: widget.tweetTxt,
+                  tweetUrl: widget.tweetUrl,
+                  userName: widget.userName,
+                  isMeme: true,
+                  profileUrl: widget.profileUrl,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          takeScreenshot();
+                        },
+                        child: Text('Zapisz w telefonie')),
+                    ElevatedButton(
+                        onPressed: () {}, child: Text('Zapisz w poczekalni')),
+                    ElevatedButton(
+                        onPressed: () {
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          //     builder: (context) => ListOfNews()));
+                        },
+                        child: Text('Anuluj')),
+                  ],
+                ),
               ],
             )
           ],

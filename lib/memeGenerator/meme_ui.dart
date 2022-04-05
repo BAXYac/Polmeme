@@ -1,9 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:polmeme/memeGenerator/meme_gen.dart';
-import 'package:polmeme/memeGenerator/meme_gen2.dart';
 import 'package:polmeme/newsScreen/widgets/one_news_screen.dart';
 
 class MemeUI extends StatefulWidget {
@@ -28,7 +26,7 @@ class MemeUI extends StatefulWidget {
 }
 
 class _MemeUIState extends State<MemeUI> {
-  XFile? _image;
+  late XFile _image;
   late File _imageFile;
   bool imageSelected = false;
 
@@ -43,21 +41,21 @@ class _MemeUIState extends State<MemeUI> {
       if (image != null) {
         imageSelected = true;
       } else {}
-      _image = image;
+      _image = image!;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text('Wybierz zdjęcie do mema'),
+      ),
       body: ListView(
         shrinkWrap: true,
         children: [
-          Container(
+          SizedBox(
             height: 30,
-            child:
-                Text('Dodaj zdjęcie z galerii lub wybierz jedno z dostępnych'),
           ),
           Center(
             child: Container(
@@ -75,19 +73,61 @@ class _MemeUIState extends State<MemeUI> {
                       child: Icon(Icons.add_a_photo),
                       onTap: () {
                         getImage().whenComplete(
-                            () => Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => MemeGenerator(
-                                      image: _image,
-                                    ))));
+                          () => Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => MemeGenerator(
+                                currentIndex: widget.currentIndex,
+                                screenName: widget.screenName,
+                                tweetTxt: widget.tweetTxt,
+                                tweetUrl: widget.tweetUrl,
+                                userName: widget.userName,
+                                profileUrl: widget.profileUrl,
+                                image: _image,
+                              ),
+                            ),
+                          ),
+                        );
                       },
                     ),
                   ),
+                  widget.currentIndex["extended_entities"] == null
+                      ? Container()
+                      : Container(
+                          child: InkWell(
+                            child: Image.network(
+                                widget.currentIndex["extended_entities"]
+                                    ["media"][0]["media_url_https"]),
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => MemeGenerator(
+                                  currentIndex: widget.currentIndex,
+                                  screenName: widget.screenName,
+                                  tweetTxt: widget.tweetTxt,
+                                  tweetUrl: widget.tweetUrl,
+                                  userName: widget.userName,
+                                  profileUrl: widget.profileUrl,
+                                  image: null,
+                                  image2: Image.network(
+                                      widget.currentIndex["extended_entities"]
+                                          ["media"][0]["media_url_https"]),
+                                ),
+                              ));
+                            },
+                          ),
+                        ),
                   Container(
                     child: InkWell(
                       child: Image.asset('assets/img/image1.jpg'),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Meme2(
+                          builder: (context) => MemeGenerator(
+                            currentIndex: widget.currentIndex,
+                            screenName: widget.screenName,
+                            tweetTxt: widget.tweetTxt,
+                            tweetUrl: widget.tweetUrl,
+                            userName: widget.userName,
+                            profileUrl: widget.profileUrl,
+                            image: null,
                             image2: Image.asset('assets/img/image1.jpg'),
                           ),
                         ));
@@ -99,7 +139,14 @@ class _MemeUIState extends State<MemeUI> {
                       child: Image.asset('assets/img/image2.jpg'),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Meme2(
+                          builder: (context) => MemeGenerator(
+                            currentIndex: widget.currentIndex,
+                            screenName: widget.screenName,
+                            tweetTxt: widget.tweetTxt,
+                            tweetUrl: widget.tweetUrl,
+                            userName: widget.userName,
+                            profileUrl: widget.profileUrl,
+                            image: null,
                             image2: Image.asset('assets/img/image2.jpg'),
                           ),
                         ));
@@ -111,7 +158,14 @@ class _MemeUIState extends State<MemeUI> {
                       child: Image.asset('assets/img/image3.jpg'),
                       onTap: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => Meme2(
+                          builder: (context) => MemeGenerator(
+                            currentIndex: widget.currentIndex,
+                            screenName: widget.screenName,
+                            tweetTxt: widget.tweetTxt,
+                            tweetUrl: widget.tweetUrl,
+                            userName: widget.userName,
+                            profileUrl: widget.profileUrl,
+                            image: null,
                             image2: Image.asset('assets/img/image3.jpg'),
                           ),
                         ));
