@@ -17,15 +17,12 @@ class TwietterApiProvider extends ChangeNotifier {
   var test;
 
   launchURL(url) async {
-    // for (var index in _listOfTweets) {
-    //String url = _listOfTweets[index]["extended_entities"]["media"][0]["expanded_url"];
     if (await canLaunch(url)) {
       await launch(url);
-      print(url);
     } else {
       throw 'Could not launch $url';
     }
-    // }
+
     notifyListeners();
   }
 
@@ -53,10 +50,9 @@ class TwietterApiProvider extends ChangeNotifier {
 
       Map<String, dynamic> data =
           Map<String, dynamic>.from(json.decode(response.body));
-      print(data["statuses"][0].keys);
+
       _listOfTweets = data["statuses"];
       test = _listOfTweets[0]["user"]["url"];
-      print(test);
     } catch (error) {
       print('error while requesting home timeline: $error');
     }
