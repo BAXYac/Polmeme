@@ -1,5 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:dart_twitter_api/api/users/data/user.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:polmeme/auth/auth_state.dart';
@@ -25,12 +23,13 @@ class _HomeState extends State<Home> {
   @override
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isMeme = false;
-
   @override
   @override
   PageController _controller = PageController();
   Widget build(BuildContext context) {
     Provider.of<TwietterApiProvider>(context, listen: false).getData();
+    bool loggedIn =
+        Provider.of<AuthState>(context, listen: false).auth.currentUser != null;
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
@@ -40,50 +39,58 @@ class _HomeState extends State<Home> {
         child: ListView(
           shrinkWrap: true,
           children: [
+            if (loggedIn)
+              ListTile(
+                title: FutureBuilder(
+                    future: Provider.of<AuthState>(context, listen: false)
+                        .getCurrentUserEmail(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(snapshot.data.toString());
+                      } else {
+                        return Text("Szanowny kierowniku, może konto?");
+                      }
+                    }),
+                leading: Icon(Icons.person),
+              ),
+            if (loggedIn)
+              const ListTile(
+                title: Text('Twoje meme'),
+              ),
+            if (loggedIn)
+              const ListTile(
+                title: Text('Ustawienia'),
+              ),
             ListTile(
-              title: FutureBuilder(
-                  future: Provider.of<AuthState>(context, listen: false)
-                      .getCurrentUserEmail(),
-                  builder:
-                      (BuildContext context, AsyncSnapshot<String> snapshot) {
-                    if (snapshot.hasData) {
-                      return Text(snapshot.data.toString());
-                    } else {
-                      return Text("Szanowny kierowniku, może konto?");
-                    }
-                  }),
-              leading: const Icon(Icons.person),
-            ),
-            const ListTile(
-              title: Text('Twoje meme'),
-            ),
-            const ListTile(
-              title: Text('Ustawienia'),
-            ),
-            ListTile(
-              title: Text('Ciemny motyw?'),
+              title: const Text('Ciemny motyw?'),
               trailing: IconButton(
                   onPressed: () {
                     ThemeProvider themeProvider =
                         Provider.of<ThemeProvider>(context, listen: false);
                     themeProvider.swapTheme();
                   },
-                  icon: Icon(Icons.brightness_6)),
+                  icon: const Icon(Icons.brightness_6)),
             ),
-            const ListTile(
-              title: Text('Zmiana hasła'),
-            ),
+            if (loggedIn)
+              ListTile(
+                title: const Text('Zmiana hasła'),
+                onTap: () {},
+              ),
             ListTile(
-              title: const Text('Wyloguj'),
+              title:
+                  loggedIn ? const Text('Wyloguj') : const Text('Zaloguj się'),
               onTap: () {
                 Provider.of<AuthState>(context, listen: false)
                     .signOutWithEmail()
-                    .whenComplete(() => Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => LoginPage(),
-                          ),
-                        ));
+                    .whenComplete(
+                      () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      ),
+                    );
               },
             ),
           ],

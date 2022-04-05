@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/my_buttony.dart';
 
 class HotMeme extends StatelessWidget {
   HotMeme({Key? key}) : super(key: key);
@@ -24,7 +25,7 @@ class HotMeme extends StatelessWidget {
                       padding: const EdgeInsets.all(10.0),
                       child: Image.asset(hot[index2]),
                     ),
-                    myButtony(),
+                    const MyButtony(),
                   ],
                 );
               },
@@ -34,49 +35,5 @@ class HotMeme extends StatelessWidget {
         ],
       ),
     );
-  }
-
-  myButtony() {
-    return Row(children: [
-      Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.green,
-            textStyle: TextStyle(fontSize: 25),
-          ),
-          onPressed: () {},
-          child: const Text(
-            "+",
-          ),
-        ),
-      ),
-      Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8.0),
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.red,
-            textStyle: TextStyle(fontSize: 25),
-          ),
-          onPressed: () {},
-          child: const Text(
-            "-",
-          ),
-        ),
-      ),
-      Container(
-        width: 100,
-      ),
-      ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          primary: Colors.blue,
-          textStyle: TextStyle(fontSize: 20),
-        ),
-        onPressed: () {},
-        child: const Text(
-          "Comment",
-        ),
-      ),
-    ]);
   }
 }
