@@ -4,7 +4,14 @@ import 'package:flutter/cupertino.dart';
 class AuthState extends ChangeNotifier {
   User? user;
 
-  FirebaseAuth auth;
+  Future<String> getCurrentUserEmail() async {
+    User user = auth.currentUser!;
+    final String email = user.email.toString();
+
+    return email;
+  }
+
+  FirebaseAuth auth = FirebaseAuth.instance;
 
   AuthState(
     this.auth,

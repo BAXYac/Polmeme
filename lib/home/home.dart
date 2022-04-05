@@ -1,4 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dart_twitter_api/api/users/data/user.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:polmeme/auth/auth_state.dart';
 
 import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/memeScreen/meme_screen.dart';
@@ -21,6 +25,7 @@ class _HomeState extends State<Home> {
   @override
   var scaffoldKey = GlobalKey<ScaffoldState>();
   bool _isMeme = false;
+
   @override
   @override
   PageController _controller = PageController();
@@ -35,9 +40,19 @@ class _HomeState extends State<Home> {
         child: ListView(
           shrinkWrap: true,
           children: [
-            const ListTile(
-              title: Text('Username'),
-              leading: Icon(Icons.person),
+            ListTile(
+              title: FutureBuilder(
+                  future: Provider.of<AuthState>(context, listen: false)
+                      .getCurrentUserEmail(),
+                  builder:
+                      (BuildContext context, AsyncSnapshot<String> snapshot) {
+                    if (snapshot.hasData) {
+                      return Text(snapshot.data.toString());
+                    } else {
+                      return Text("Szanowny kierowniku, może konto?");
+                    }
+                  }),
+              leading: const Icon(Icons.person),
             ),
             const ListTile(
               title: Text('Twoje meme'),
@@ -61,12 +76,14 @@ class _HomeState extends State<Home> {
             ListTile(
               title: const Text('Wyloguj'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ),
-                );
+                Provider.of<AuthState>(context, listen: false)
+                    .signOutWithEmail()
+                    .whenComplete(() => Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginPage(),
+                          ),
+                        ));
               },
             ),
           ],
