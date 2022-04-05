@@ -6,23 +6,23 @@ import 'package:polmeme/memeGenerator/meme_gen.dart';
 import 'package:polmeme/memeGenerator/meme_gen2.dart';
 import 'package:polmeme/newsScreen/widgets/one_news_screen.dart';
 
-import 'package:polmeme/provider/twitter_api_provider.dart';
-import 'package:provider/provider.dart';
-
 class MemeUI extends StatefulWidget {
   const MemeUI(
       {Key? key,
-      this.currentIndex,
-      this.screenName,
-      this.tweetTxt,
-      this.tweetUrl,
-      this.userName})
+      required this.currentIndex,
+      required this.screenName,
+      required this.tweetTxt,
+      required this.tweetUrl,
+      required this.userName,
+      required this.profileUrl})
       : super(key: key);
   final currentIndex;
   final screenName;
   final tweetTxt;
   final tweetUrl;
   final userName;
+  final String profileUrl;
+
   @override
   State<MemeUI> createState() => _MemeUIState();
 }
@@ -51,7 +51,8 @@ class _MemeUIState extends State<MemeUI> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-      body: Column(
+      body: ListView(
+        shrinkWrap: true,
         children: [
           Container(
             height: 30,
@@ -124,18 +125,14 @@ class _MemeUIState extends State<MemeUI> {
           SizedBox(
             height: 50,
           ),
-          Container(
-            height: 200,
-            width: MediaQuery.of(context).size.width,
-            child: OneNews(
-              currentIndex: widget.currentIndex,
-              screenName: widget.screenName,
-              tweetTxt: widget.tweetTxt,
-              tweetUrl: widget.tweetUrl,
-              userName: widget.userName,
-              isMeme: true,
-              profileUrl: '',
-            ),
+          OneNews(
+            currentIndex: widget.currentIndex,
+            screenName: widget.screenName,
+            tweetTxt: widget.tweetTxt,
+            tweetUrl: widget.tweetUrl,
+            userName: widget.userName,
+            isMeme: true,
+            profileUrl: widget.profileUrl,
           ),
         ],
       ),

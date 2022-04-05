@@ -28,7 +28,7 @@ class _Meme2State extends State<Meme2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(

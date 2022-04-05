@@ -30,7 +30,7 @@ class _MemeGeneratorState extends State<MemeGenerator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             SizedBox(

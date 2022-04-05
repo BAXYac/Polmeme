@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:linkwell/linkwell.dart';
 import 'package:polmeme/auth/login_page.dart';
+import 'package:polmeme/memeGenerator/meme_ui.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
@@ -154,71 +155,89 @@ class OneNews extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Color(0xff1B6569),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
-              ),
-            ),
-            height: MediaQuery.of(context).size.height * 0.05,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                    onPressed: () {},
-                    child: const Text(
-                      "Pokaż meme",
-                      style: TextStyle(color: Colors.white),
-                    )),
-                TextButton(
-                    onPressed: loggedIn
-                        ? () {}
-                        : () {
-                            showDialog(
-                                barrierDismissible: false,
-                                context: context,
-                                builder: (BuildContext context) => AlertDialog(
-                                      backgroundColor: const Color(0xff1B6569),
-                                      title: const Text(
-                                          'Tylko dla zalogowanych użytkowników'),
-                                      content: const Text(
-                                          'Zaloguj się, aby stworzyć mema'),
-                                      actions: <Widget>[
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                              primary: Colors.white),
-                                          onPressed: () =>
-                                              Navigator.pop(context, 'Cancel'),
-                                          child: const Text(
-                                              'Jednak wolę przeglądać'),
-                                        ),
-                                        TextButton(
-                                          style: TextButton.styleFrom(
-                                              primary: Colors.white),
-                                          onPressed: () {
-                                            Navigator.pushReplacement(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    LoginPage(),
+          isMeme == false
+              ? Container(
+                  decoration: const BoxDecoration(
+                    color: Color(0xff1B6569),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
+                  ),
+                  height: MediaQuery.of(context).size.height * 0.05,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            "Pokaż meme",
+                            style: TextStyle(color: Colors.white),
+                          )),
+                      TextButton(
+                          onPressed: loggedIn
+                              ? () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => MemeUI(
+                                        currentIndex: currentIndex,
+                                        screenName: screenName,
+                                        tweetTxt: tweetTxt,
+                                        tweetUrl: tweetUrl,
+                                        userName: userName,
+                                        profileUrl: profileUrl,
+                                      ),
+                                    ),
+                                  );
+                                }
+                              : () {
+                                  showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (BuildContext context) =>
+                                          AlertDialog(
+                                            backgroundColor:
+                                                const Color(0xff1B6569),
+                                            title: const Text(
+                                                'Tylko dla zalogowanych użytkowników'),
+                                            content: const Text(
+                                                'Zaloguj się, aby stworzyć mema'),
+                                            actions: <Widget>[
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                    primary: Colors.white),
+                                                onPressed: () => Navigator.pop(
+                                                    context, 'Cancel'),
+                                                child: const Text(
+                                                    'Jednak wolę przeglądać'),
                                               ),
-                                            );
-                                          },
-                                          child: const Text('Zaloguj się'),
-                                        ),
-                                      ],
-                                    ));
-                          },
-                    child: Text(
-                      "Stwórz meme",
-                      style: TextStyle(
-                          color: loggedIn ? Colors.white : Colors.grey),
-                    ))
-              ],
-            ),
-          )
+                                              TextButton(
+                                                style: TextButton.styleFrom(
+                                                    primary: Colors.white),
+                                                onPressed: () {
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          LoginPage(),
+                                                    ),
+                                                  );
+                                                },
+                                                child:
+                                                    const Text('Zaloguj się'),
+                                              ),
+                                            ],
+                                          ));
+                                },
+                          child: Text(
+                            "Stwórz meme",
+                            style: TextStyle(
+                                color: loggedIn ? Colors.white : Colors.grey),
+                          ))
+                    ],
+                  ))
+              : Container(),
         ],
       ),
     );
