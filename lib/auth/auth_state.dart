@@ -7,7 +7,6 @@ class AuthState extends ChangeNotifier {
   Future<String> getCurrentUserEmail() async {
     User user = auth.currentUser!;
     final String email = user.email.toString();
-
     return email;
   }
 
