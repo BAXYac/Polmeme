@@ -12,22 +12,18 @@ class AddingMeme extends StatelessWidget {
         children: [
           Center(
             child: ElevatedButton(
-              child: const Text("Zaladuj zdjęcie"),
-              onPressed: () async {
-                FilePickerResult? result =
-                    await FilePicker.platform.pickFiles(
-                      type: FileType.custom
-                      allowedExtensions: ['jpg','pdf'],
-                    );
-                if (result == null) 
-                  return ; // if user don't pick any thing then do nothing just return.
-                PlatformFile file = result.files.first;
-                  print('File Name: ${file.name}');
-       print('File Size: ${file.size}');
-       print('File Extension: ${file.extension}');
-       print('File Path: ${file.path}');
-              },
-            ),
+                child: const Text("Zaladuj zdjęcie"),
+                onPressed: () async {
+                  final results = await FilePicker.platform.pickFiles(
+                    allowMultiple: false,
+                    type: FileType.custom,
+                    allowedExtensions: ['jpg', 'pdf'],
+                  );
+                  if (results == null) {
+                    return;
+                  }
+                  ;
+                }),
           ),
         ],
       ),
