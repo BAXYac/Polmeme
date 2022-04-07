@@ -40,8 +40,18 @@ class _HomeState extends State<Home> {
           shrinkWrap: true,
           children: [
             if (loggedIn)
-              const ListTile(
-                title: Text('Username'),
+              ListTile(
+                title: FutureBuilder(
+                    future: Provider.of<AuthState>(context, listen: false)
+                        .getCurrentUserEmail(),
+                    builder:
+                        (BuildContext context, AsyncSnapshot<String> snapshot) {
+                      if (snapshot.hasData) {
+                        return Text(snapshot.data.toString());
+                      } else {
+                        return Text("Szanowny kierowniku, może konto?");
+                      }
+                    }),
                 leading: Icon(Icons.person),
               ),
             if (loggedIn)
@@ -71,12 +81,16 @@ class _HomeState extends State<Home> {
               title:
                   loggedIn ? const Text('Wyloguj') : const Text('Zaloguj się'),
               onTap: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => LoginPage(),
-                  ),
-                );
+                Provider.of<AuthState>(context, listen: false)
+                    .signOutWithEmail()
+                    .whenComplete(
+                      () => Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => LoginPage(),
+                        ),
+                      ),
+                    );
               },
             ),
           ],
