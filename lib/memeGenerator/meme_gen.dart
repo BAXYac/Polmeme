@@ -47,11 +47,12 @@ class _MemeGeneratorState extends State<MemeGenerator> {
   bool isNew = true;
   bool backColor = false;
   Offset offset = Offset(0, -50);
-  Offset offsetBottom = Offset(0, 100);
+  Offset offsetBottom = Offset(0, 60);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -69,9 +70,13 @@ class _MemeGeneratorState extends State<MemeGenerator> {
                         ? Image.file(
                             File(widget.image!.path),
                             height: 300,
-                            fit: BoxFit.fitHeight,
+                            fit: BoxFit.fill,
                           )
-                        : widget.image2,
+                        : Container(
+                            child: widget.image2,
+                            height: 300,
+                            width: MediaQuery.of(context).size.width,
+                          ),
                     Container(
                       child: Positioned(
                         left: offset.dx,

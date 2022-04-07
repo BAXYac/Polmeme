@@ -108,8 +108,10 @@ class _MemeUIState extends State<MemeUI> {
                                   profileUrl: widget.profileUrl,
                                   image: null,
                                   image2: Image.network(
-                                      widget.currentIndex["extended_entities"]
-                                          ["media"][0]["media_url_https"]),
+                                    widget.currentIndex["extended_entities"]
+                                        ["media"][0]["media_url_https"],
+                                    fit: BoxFit.fill,
+                                  ),
                                 ),
                               ));
                             },
@@ -128,7 +130,10 @@ class _MemeUIState extends State<MemeUI> {
                             userName: widget.userName,
                             profileUrl: widget.profileUrl,
                             image: null,
-                            image2: Image.asset('assets/img/image1.jpg'),
+                            image2: Image.asset(
+                              'assets/img/image1.jpg',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ));
                       },
@@ -147,7 +152,10 @@ class _MemeUIState extends State<MemeUI> {
                             userName: widget.userName,
                             profileUrl: widget.profileUrl,
                             image: null,
-                            image2: Image.asset('assets/img/image2.jpg'),
+                            image2: Image.asset(
+                              'assets/img/image2.jpg',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ));
                       },
@@ -166,7 +174,10 @@ class _MemeUIState extends State<MemeUI> {
                             userName: widget.userName,
                             profileUrl: widget.profileUrl,
                             image: null,
-                            image2: Image.asset('assets/img/image3.jpg'),
+                            image2: Image.asset(
+                              'assets/img/image3.jpg',
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ));
                       },

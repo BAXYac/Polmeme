@@ -177,7 +177,17 @@ class OneNews extends StatelessWidget {
                           )),
                       TextButton(
                           onPressed: loggedIn
-                              ? () {}
+                              ? () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => MemeUI(
+                                            currentIndex: currentIndex,
+                                            screenName: screenName,
+                                            tweetTxt: tweetTxt,
+                                            tweetUrl: tweetUrl,
+                                            userName: userName,
+                                            profileUrl: profileUrl,
+                                          )));
+                                }
                               : () {
                                   showDialog(
                                       barrierDismissible: false,
