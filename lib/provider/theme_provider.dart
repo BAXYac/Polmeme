@@ -13,7 +13,9 @@ class ThemeProvider extends ChangeNotifier {
     ),
   );
 
-  ThemeData dark = ThemeData.dark().copyWith(primaryColor: Colors.black);
+  ThemeData dark = ThemeData.dark().copyWith(
+      primaryColor: Colors.black,
+      buttonTheme: ButtonThemeData(buttonColor: Color(0xff1B6569)));
 
   ThemeProvider({bool isDarkMode = false}) {
     _selectedTheme = isDarkMode ? dark : light;
