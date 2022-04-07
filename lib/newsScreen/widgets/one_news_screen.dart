@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/memeScreen/screens/adding_meme.dart';
 import 'package:polmeme/newsScreen/widgets/my_alert_dialog.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
@@ -140,7 +141,13 @@ class OneNews extends StatelessWidget {
                     )),
                 TextButton(
                     onPressed: loggedIn
-                        ? () {}
+                        ? () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddingMeme(),
+                                ));
+                          }
                         : () {
                             showDialog(
                                 barrierDismissible: false,
