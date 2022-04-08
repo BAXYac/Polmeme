@@ -65,7 +65,7 @@ class AddingMeme extends StatelessWidget {
               builder: (context, AsyncSnapshot<String> snapshot) {
                 if (snapshot.connectionState == ConnectionState.done) {
                   return Container(
-                    height: 100,
+                    height: 300,
                     width: 200,
                     child: Image.network(
                       snapshot.data!,
