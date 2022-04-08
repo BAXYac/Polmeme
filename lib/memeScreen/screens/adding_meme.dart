@@ -16,58 +16,64 @@ class AddingMeme extends StatelessWidget {
       appBar: AppBar(),
       body: Column(
         children: [
-          Center(
-            child: ElevatedButton(
-              child: const Text("Zaladuj zdjęcie"),
-              onPressed: () async {
-                final results = await FilePicker.platform.pickFiles(
-                  allowMultiple: false,
-                  type: FileType.custom,
-                  allowedExtensions: ['jpg', 'pdf'],
-                );
-                if (results == null) {
-                  return;
-                }
-                final path = results.files.single.path!;
-                final fileName = results.files.single.name;
+          Container(
+            child: Center(
+              child: ElevatedButton(
+                child: const Text("Zaladuj zdjęcie"),
+                onPressed: () async {
+                  final results = await FilePicker.platform.pickFiles(
+                    allowMultiple: false,
+                    type: FileType.custom,
+                    allowedExtensions: ['jpg', 'pdf'],
+                  );
+                  if (results == null) {
+                    return;
+                  }
+                  final path = results.files.single.path!;
+                  final fileName = results.files.single.name;
 
-                storage
-                    .uploadFile(path, fileName)
-                    .then((value) => print("Done"));
-              },
+                  storage
+                      .uploadFile(path, fileName)
+                      .then((value) => print("Done"));
+                },
+              ),
             ),
           ),
           FutureBuilder(
-              future: storage.listFiles(),
-              builder: (context,
-                  AsyncSnapshot<firebase_storage.ListResult> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  return Container(
-                    height: 300,
-                    child: ListView.builder(
+            future: storage.listFiles(),
+            builder:
+                (context, AsyncSnapshot<firebase_storage.ListResult> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return Container(
+                  child: ListView.builder(
                       scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
                       itemCount: snapshot.data!.items.length,
                       itemBuilder: (BuildContext context, int index) {
-                        return Column(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {},
-                              child: Text(
-                                snapshot.data!.items[index].name,
-                              ),
-                            ),
-                          ],
+                        return ElevatedButton(
+                          child: Text(snapshot.data!.items[index].name),
+                          onPressed: () {},
                         );
-                      },
+                      }),
+                );
+              }
+              return CircularProgressIndicator();
+            },
+          ),
+          FutureBuilder(
+              future: storage.downloadUrl("5f5b598197bcb_o_large.jpg"),
+              builder: (context, AsyncSnapshot<String> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  return Container(
+                    height: 100,
+                    width: 200,
+                    child: Image.network(
+                      snapshot.data!,
+                      fit: BoxFit.cover,
                     ),
                   );
                 }
-                if (snapshot.connectionState == AsyncSnapshot.waiting() ||
-                    !snapshot.hasData) {
-                  return CircularProgressIndicator();
-                }
-                return Container();
+                return CircularProgressIndicator();
               }),
         ],
       ),
