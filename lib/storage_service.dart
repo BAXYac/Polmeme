@@ -16,4 +16,13 @@ class Storage {
       print(e);
     }
   }
+
+  Future<firebase_storage.ListResult> listFiles() async {
+    firebase_storage.ListResult results = await storage.ref("test").listAll();
+
+    for (var ref in results.items) {
+      print("Found file: $ref ");
+    }
+    return results;
+  }
 }
