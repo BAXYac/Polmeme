@@ -22,6 +22,7 @@ class ListOfNews extends StatelessWidget {
             }
           },
           child: OneNews(
+              isMeme: false,
               profileUrl:
                   "https://twitter.com/${myProvider["user"]["screen_name"]}",
               currentIndex: myProvider,
@@ -35,45 +36,74 @@ class ListOfNews extends StatelessWidget {
     return Scaffold(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         body: FutureBuilder(
-          future: Provider.of<TwietterApiProvider>(context, listen: false)
-              .getData(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.waiting:
-                return const Center(child: CircularProgressIndicator());
-              default:
-                if (snapshot.hasError) {
-                  return Text('Error: ${snapshot.error}');
-                } else {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Expanded(
-                          child:
-                              //  Text(
-                              //     Provider.of<TwietterApiProvider>(context).test.toString())
+            future: Provider.of<TwietterApiProvider>(context, listen: false)
+                .getData(),
+            builder: (context, snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.waiting:
+                  return const Center(child: CircularProgressIndicator());
+                default:
+                  if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          Expanded(
+                            child:
+                                //  Text(
+                                //     Provider.of<TwietterApiProvider>(context).test.toString())
 
-                              // dlugosc listy < 1 ? Circular progress indicator:
+                                // dlugosc listy < 1 ? Circular progress indicator:
 
-                              ListView.builder(
-                            itemBuilder: (context, index) {
-                              return myCard(index);
-                            },
-                            itemCount: Provider.of<TwietterApiProvider>(context,
-                                    listen: false)
-                                .listOfTweets
-                                .length,
+                                ListView.builder(
+                              itemBuilder: (context, index) {
+                                return myCard(index);
+                              },
+                              itemCount: Provider.of<TwietterApiProvider>(
+                                      context,
+                                      listen: false)
+                                  .listOfTweets
+                                  .length,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  );
-                }
-            }
+                        ],
+                      ),
+                    );
+                  }
+              }
 
-            // By default, show a loading spinner.
-          },
-        ));
+              // children: [
+              //   Text(
+              //       Provider.of<TwietterApiProvider>(context).test.toString())
+              // ],
+            }));
+  }
+
+  Widget myCard(index, context) {
+    var myProvider = Provider.of<TwietterApiProvider>(context, listen: false)
+        .listOfTweets[index];
+    return Dismissible(
+      key: UniqueKey(),
+      onDismissed: (kierunkowy) {
+        if (kierunkowy == DismissDirection.startToEnd ||
+            kierunkowy == DismissDirection.endToStart) {
+          Provider.of<TwietterApiProvider>(context, listen: false)
+              .listOfTweets
+              .removeAt(index);
+        }
+      },
+      child: OneNews(
+        profileUrl: "https://twitter.com/${myProvider["user"]["screen_name"]}",
+        currentIndex: myProvider,
+        tweetUrl:
+            "https://twitter.com/${myProvider["user"]["screen_name"]}/status/${myProvider["id"]}",
+        screenName: myProvider["user"]["screen_name"],
+        userName: myProvider["user"]["name"],
+        tweetTxt: myProvider["full_text"],
+        isMeme: false,
+      ),
+    );
   }
 }
