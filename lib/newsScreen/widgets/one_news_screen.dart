@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:polmeme/memeScreen/screens/adding_meme.dart';
 import 'package:linkwell/linkwell.dart';
-import 'package:polmeme/auth/login_page.dart';
 import 'package:polmeme/memeGenerator/meme_ui.dart';
 import 'package:polmeme/newsScreen/widgets/my_alert_dialog.dart';
 import 'package:polmeme/provider/twitter_api_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:transparent_image/transparent_image.dart';
-
 import '../../auth/auth_state.dart';
 
 class OneNews extends StatelessWidget {
@@ -154,6 +153,48 @@ class OneNews extends StatelessWidget {
                         ),
                 ],
               ),
+            ),
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              color: Color(0xff1B6569),
+              borderRadius: BorderRadius.only(
+                bottomRight: Radius.circular(15),
+                bottomLeft: Radius.circular(15),
+              ),
+            ),
+            height: MediaQuery.of(context).size.height * 0.05,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "Pokaż meme",
+                      style: TextStyle(color: Colors.white),
+                    )),
+                TextButton(
+                    onPressed: loggedIn
+                        ? () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => AddingMeme(),
+                                ));
+                          }
+                        : () {
+                            showDialog(
+                                barrierDismissible: false,
+                                context: context,
+                                builder: (BuildContext context) =>
+                                    const MyAlertDialog());
+                          },
+                    child: Text(
+                      "Stwórz meme",
+                      style: TextStyle(
+                          color: loggedIn ? Colors.white : Colors.grey),
+                    ))
+              ],
             ),
           ),
           isMeme == false
